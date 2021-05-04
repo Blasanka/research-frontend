@@ -10,7 +10,7 @@
         android:id="@+id/tvFragmentFlower"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Asanka BL"
+        android:text="Asanka BL IT15148414"
         android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
