@@ -24,6 +24,7 @@ class SuggestFragment : Fragment(R.layout.fragment_suggest) {
     private fun to(){
 
         addToChannel("Test",true)
+        addToChannel("Test2",true)
 
 
 
