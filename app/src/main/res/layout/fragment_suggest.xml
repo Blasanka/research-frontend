@@ -1,68 +1,494 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/suggestMain"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            tools:context=".SuggestFragment">
 
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/tonConLay"
+                    android:layout_width="410dp"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/blue_round"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/books"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Floriculture"
+                            android:textColor="@color/white"
+                            android:textSize="30sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.169" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout"
+                    android:layout_width="350dp"
+                    android:layout_height="270dp"
+                    android:layout_marginTop="120dp"
+                    android:background="#FFB6C1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/recyclerView" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints">
+
+                        <androidx.viewpager2.widget.ViewPager2
+                            android:id="@+id/viewPager"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
 
-                <SearchView
-                    android:id="@+id/searchView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout3"
+                    android:layout_width="350dp"
+                    android:layout_height="40dp"
+                    android:background="#FFB6C1"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/books" />
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+                    tools:ignore="MissingConstraints">
 
-                <ListView
-                    android:id="@+id/listView"
-                    android:layout_width="match_parent"
-                    android:layout_height="162dp"
-                    android:layout_margin="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginBottom="116dp"
+                        <TextView
+                            android:id="@+id/city"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginLeft="16dp"
+                            android:text="Location Not Detected"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="MissingConstraints">
+
+                        </TextView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvTodos"
+                    android:layout_width="350dp"
+                    android:layout_height="170dp"
+                    android:layout_marginBottom="156dp"
+                    android:background="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.508"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/searchView" />
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout2"
+                    android:layout_width="350dp"
+                    android:layout_height="170dp"
+                    android:background="#FFB6C1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rvTodos"
+                    tools:ignore="MissingConstraints">
+
+
+                        <LinearLayout
+                            android:id="@+id/detailsContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
+                            tools:ignore="MissingConstraints">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:weightSum="3">
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:background="#3CF1EBF1"
+                                            android:gravity="center"
+                                            android:orientation="vertical"
+                                            android:padding="8dp">
+
+                                                <ImageView
+                                                    android:layout_width="25dp"
+                                                    android:layout_height="25dp"
+                                                    android:src="@drawable/sunrise"
+                                                   />
+
+                                                <Space
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="5dp" />
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Sunrise"
+                                                    android:textSize="12dp" />
+
+                                                <TextView
+                                                    android:id="@+id/sunrises"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Try Again"
+                                                    android:textSize="14dp" />
+                                        </LinearLayout>
+
+                                        <Space
+                                            android:layout_width="10dp"
+                                            android:layout_height="wrap_content" />
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:background="#3CF1EBF1"
+                                            android:gravity="center"
+                                            android:orientation="vertical"
+                                            android:padding="8dp">
+
+                                                <ImageView
+                                                    android:layout_width="25dp"
+                                                    android:layout_height="25dp"
+                                                    android:src="@drawable/sunset"
+                                                    />
+
+                                                <Space
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="5dp" />
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Sunset"
+                                                    android:textSize="12dp" />
+
+                                                <TextView
+                                                    android:id="@+id/sunsets"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Try Again"
+                                                    android:textSize="14dp" />
+                                        </LinearLayout>
+
+                                        <Space
+                                            android:layout_width="10dp"
+                                            android:layout_height="wrap_content" />
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:background="#3CF1EBF1"
+                                            android:gravity="center"
+                                            android:orientation="vertical"
+                                            android:padding="8dp">
+
+                                                <ImageView
+                                                    android:layout_width="25dp"
+                                                    android:layout_height="25dp"
+                                                    android:src="@drawable/wind"
+                                                  />
+
+                                                <Space
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="5dp" />
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Wind"
+                                                    android:textSize="12dp" />
+
+                                                <TextView
+                                                    android:id="@+id/winds"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Try Again"
+                                                    android:textSize="14dp" />
+                                        </LinearLayout>
+                                </LinearLayout>
+
+                                <Space
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="10dp" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:weightSum="3">
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:background="#3CF1EBF1"
+                                            android:gravity="center"
+                                            android:orientation="vertical"
+                                            android:padding="8dp">
+
+                                                <ImageView
+                                                    android:layout_width="25dp"
+                                                    android:layout_height="25dp"
+                                                    android:src="@drawable/pressure"
+                                                     />
+
+                                                <Space
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="5dp" />
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Pressure"
+                                                    android:textSize="12dp" />
+
+                                                <TextView
+                                                    android:id="@+id/pressures"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Try Again"
+                                                    android:textSize="14dp" />
+                                        </LinearLayout>
+
+                                        <Space
+                                            android:layout_width="10dp"
+                                            android:layout_height="wrap_content" />
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:background="#3CF1EBF1"
+                                            android:gravity="center"
+                                            android:orientation="vertical"
+                                            android:padding="8dp">
+
+                                                <ImageView
+                                                    android:layout_width="25dp"
+                                                    android:layout_height="25dp"
+                                                    android:src="@drawable/humidity"
+                                                    />
+
+                                                <Space
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="5dp" />
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Humidity"
+                                                    android:textSize="12dp" />
+
+                                                <TextView
+                                                    android:id="@+id/humiditys"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Try Again"
+                                                    android:textSize="14dp" />
+                                        </LinearLayout>
+
+                                        <Space
+                                            android:layout_width="10dp"
+                                            android:layout_height="wrap_content" />
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:background="#3CF1EBF1"
+                                            android:gravity="center"
+                                            android:orientation="vertical"
+                                            android:padding="8dp">
+
+                                                <ImageView
+                                                    android:layout_width="25dp"
+                                                    android:layout_height="25dp"
+                                                    android:src="@drawable/info"
+                                                   />
+
+                                                <Space
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="5dp" />
+
+                                                <TextView
+                                                    android:id="@+id/statuss"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Type"
+                                                    android:textSize="12dp" />
+
+                                                <TextView
+                                                    android:id="@+id/about"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Try Again"
+                                                    android:textSize="14dp" />
+                                        </LinearLayout>
+                                </LinearLayout>
+                        </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvTodos2"
+                    android:layout_width="350dp"
+                    android:layout_height="170dp"
+                    android:background="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+
+
+                <RelativeLayout
+                    android:id="@+id/mainContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="visible">
+
+                        <LinearLayout
+                            android:id="@+id/addressContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            tools:ignore="MissingConstraints" />
+
+
+                        <LinearLayout
+                            android:id="@+id/overviewContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:orientation="vertical"
+                            tools:ignore="MissingConstraints">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                        <Space
+                                            android:layout_width="50dp"
+                                            android:layout_height="wrap_content" />
+
+                                </LinearLayout>
+
+                        </LinearLayout>
+
+                </RelativeLayout>
+
+                <ProgressBar
+                    android:id="@+id/progressBar2"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/rvTodos"
+                    app:layout_constraintEnd_toEndOf="@+id/rvTodos"
+                    app:layout_constraintStart_toStartOf="@+id/rvTodos"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
+
+
+                <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+                <!--        android:id="@+id/constraintLayout2"-->
+                <!--        android:layout_width="match_parent"-->
+                <!--        android:layout_height="250dp"-->
+                <!--        android:background="@drawable/white_round"-->
+                <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--        app:layout_constraintEnd_toEndOf="parent"-->
+                <!--        app:layout_constraintHorizontal_bias="0.0"-->
+                <!--        app:layout_constraintStart_toStartOf="parent">-->
+
+
+                <!--        <ImageButton-->
+                <!--            android:id="@+id/button2"-->
+                <!--            android:layout_width="200dp"-->
+                <!--            android:layout_height="70dp"-->
+                <!--            android:text="Button"-->
+                <!--            app:layout_constraintBottom_toTopOf="@+id/button4"-->
+                <!--            app:layout_constraintEnd_toEndOf="parent"-->
+                <!--            app:layout_constraintHorizontal_bias="0.5"-->
+                <!--            app:layout_constraintStart_toEndOf="@+id/button"-->
+                <!--            app:layout_constraintTop_toTopOf="parent"-->
+                <!--            app:layout_constraintVertical_bias="0.236" />-->
+
+                <!--        <ImageButton-->
+                <!--            android:id="@+id/button"-->
+                <!--            android:layout_width="200dp"-->
+                <!--            android:layout_height="70dp"-->
+                <!--            android:text="Button"-->
+                <!--            app:layout_constraintBottom_toTopOf="@+id/button3"-->
+                <!--            app:layout_constraintEnd_toStartOf="@+id/button2"-->
+                <!--            app:layout_constraintHorizontal_bias="0.5"-->
+                <!--            app:layout_constraintStart_toStartOf="parent"-->
+                <!--            app:layout_constraintTop_toTopOf="parent"-->
+                <!--            app:layout_constraintVertical_bias="0.236" />-->
+
+                <!--        <ImageButton-->
+                <!--            android:id="@+id/button3"-->
+                <!--            android:layout_width="200dp"-->
+                <!--            android:layout_height="70dp"-->
+                <!--            android:text="Button"-->
+                <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--            app:layout_constraintEnd_toStartOf="@+id/button4"-->
+                <!--            app:layout_constraintHorizontal_bias="0.5"-->
+                <!--            app:layout_constraintStart_toStartOf="parent"-->
+                <!--            app:layout_constraintTop_toBottomOf="@+id/button" />-->
+
+                <!--        <ImageButton-->
+                <!--            android:id="@+id/button4"-->
+                <!--            android:layout_width="200dp"-->
+                <!--            android:layout_height="70dp"-->
+                <!--            android:text="Button"-->
+                <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--            app:layout_constraintEnd_toEndOf="parent"-->
+                <!--            app:layout_constraintHorizontal_bias="0.5"-->
+                <!--            app:layout_constraintStart_toEndOf="@+id/button3"-->
+                <!--            app:layout_constraintTop_toBottomOf="@+id/button2"-->
+                <!--            tools:ignore="MissingConstraints" />-->
+                <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
-
-</RelativeLayout>
+</ScrollView>
