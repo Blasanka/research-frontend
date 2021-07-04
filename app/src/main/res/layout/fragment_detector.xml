@@ -20,9 +20,11 @@
     <ImageView
         android:id="@+id/image"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="300dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="20dp"
         android:contentDescription="Take Picture"
+        app:layout_constraintBottom_toTopOf="@+id/take_picture_with_camera"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"

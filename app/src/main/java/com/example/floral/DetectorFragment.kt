@@ -24,8 +24,19 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.floral.databinding.FragmentDetectorBinding
 import com.example.floral.disease.Constants
-import java.io.ByteArrayOutputStream
-import java.io.File
+import com.example.floral.disease.DiseasesService
+import com.example.floral.disease.ResultResponse
+import com.google.gson.GsonBuilder
+import com.kaopiz.kprogresshud.KProgressHUD
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
@@ -34,6 +45,8 @@ import java.util.concurrent.Executors
 typealias CornersListener = () -> Unit
 
 class DetectorFragment : Fragment() {
+    private lateinit var diseaseData: ResultResponse
+    private lateinit var capturedFile: File
     private var isOffline: Boolean = false
 
     private lateinit var binding: FragmentDetectorBinding
@@ -48,9 +61,16 @@ class DetectorFragment : Fragment() {
     private lateinit var outputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
 
+    private var hud: KProgressHUD? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreate(savedInstanceState)
         binding = FragmentDetectorBinding.inflate(inflater, container, false)
+
+        hud = KProgressHUD.create(activity)
+            .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+            .setLabel("Please wait")
+            .setCancellable(true);
 
         binding.selectPhotoFromGallery.setOnClickListener {
             if(ActivityCompat.checkSelfPermission(activity!!,
@@ -97,6 +117,40 @@ class DetectorFragment : Fragment() {
             takePhoto()
         }
 
+        binding.submitImage.setOnClickListener {
+            hud!!.show()
+
+            val gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create()
+            val retrofit = Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build()
+
+            val diseaseService = retrofit.create(DiseasesService::class.java)
+            val reqFile: RequestBody = RequestBody.create(MediaType.parse("image/*"), capturedFile.readBytes())
+            val body = MultipartBody.Part.createFormData("file", capturedFile.getName(), reqFile)
+//            val name: RequestBody = RequestBody.create(MediaType.parse("text/plain"), "upload_test")
+            // Fetch the national data
+            diseaseService.detectDisease(body).enqueue(object: Callback<ResultResponse> {
+                override fun onResponse(call: Call<ResultResponse>, response: Response<ResultResponse>) {
+                    Log.i(Constants.TAG, "onResponse: $response")
+                    val data = response.body()
+                    if (data == null) {
+                        Log.w(Constants.TAG, "Did not received a valid response body")
+                        return
+                    }
+                    diseaseData = data
+                    Log.i(Constants.TAG, "Update result view with predicted data")
+                    hud?.dismiss();
+                }
+
+                override fun onFailure(call: Call<ResultResponse>, t: Throwable) {
+                    Log.e(Constants.TAG, "onFailure: $t")
+                    hud?.dismiss();
+                }
+            })
+
+        }
         return binding.root;
     }
 
@@ -185,6 +239,7 @@ class DetectorFragment : Fragment() {
                 val msg = "Photo capture succeeded: $savedUri"
                 Toast.makeText(safeContext, msg, Toast.LENGTH_SHORT).show()
                 Log.d(Constants.TAG, msg)
+                capturedFile = photoFile
             }
         })
     }
@@ -241,6 +296,12 @@ class DetectorFragment : Fragment() {
                     byteArray, 0,
                     byteArray.size
                 )
+                capturedFile = File(outputDirectory, SimpleDateFormat(Constants.FILE_NAME_FORMAT, Locale.US).format(System.currentTimeMillis()) + ".jpg")
+
+                val os: OutputStream = BufferedOutputStream(FileOutputStream(capturedFile))
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os)
+                os.close()
+
                 binding.image.setImageBitmap(bitmap)
             }
         }
@@ -250,6 +311,10 @@ class DetectorFragment : Fragment() {
                 val returnUri = data?.data
                 val bitmapImage = MediaStore.Images.Media.getBitmap(activity!!.getContentResolver(), returnUri);
                 binding.image.setImageBitmap(bitmapImage);
+                capturedFile = File(outputDirectory, SimpleDateFormat(Constants.FILE_NAME_FORMAT, Locale.US).format(System.currentTimeMillis()) + ".jpg")
+                val os: OutputStream = BufferedOutputStream(FileOutputStream(capturedFile))
+                bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, os)
+                os.close()
             }
         }
     }
