@@ -52,6 +52,24 @@ class DetectorFragment : Fragment() {
         super.onCreate(savedInstanceState)
         binding = FragmentDetectorBinding.inflate(inflater, container, false)
 
+        binding.selectPhotoFromGallery.setOnClickListener {
+            if(ActivityCompat.checkSelfPermission(activity!!,
+                    Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            {
+                requestPermissions(
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    2000);
+            }
+            else {
+                val cameraIntent =
+                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                cameraIntent.setType("image/*");
+                if (cameraIntent.resolveActivity(activity!!.getPackageManager()) != null) {
+                    startActivityForResult(cameraIntent, Constants.GALLERY_IMAGE_ACTIVITY_REQUEST_CODE);
+                }
+            }
+        }
+
         binding.takePictureWithCamera.setOnClickListener {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(
