@@ -4,7 +4,7 @@
     <item
         android:id="@+id/miFlow"
         android:icon="@drawable/ic_flo"
-        android:title="Flower"/>
+        android:title="@string/detector"/>
 
     <item
         android:id="@+id/miAssis"

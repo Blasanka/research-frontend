@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavigationView.background = null
 
-        val flowerFragment = FlowerFragment()
+        val flowerFragment = DetectorFragment()
         val assistfragment = AssistFragment()
         val shopfragment = ShopFragment()
         val suggestfragment = SuggestFragment()
