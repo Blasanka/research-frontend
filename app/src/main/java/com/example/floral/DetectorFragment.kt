@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment
 import com.example.floral.databinding.FragmentDetectorBinding
 import com.example.floral.disease.Constants
 import com.example.floral.disease.DiseasesService
+import com.example.floral.disease.PredictionResultActivity
 import com.example.floral.disease.ResultResponse
 import com.google.gson.GsonBuilder
 import com.kaopiz.kprogresshud.KProgressHUD
@@ -141,7 +142,11 @@ class DetectorFragment : Fragment() {
                     }
                     diseaseData = data
                     Log.i(Constants.TAG, "Update result view with predicted data")
-                    hud?.dismiss();
+                    Log.i(Constants.TAG, "${diseaseData.result}")
+                    hud?.dismiss()
+                    val intent = Intent(activity, PredictionResultActivity::class.java)
+                    intent.putExtra("result", diseaseData)
+                    startActivity(intent)
                 }
 
                 override fun onFailure(call: Call<ResultResponse>, t: Throwable) {
