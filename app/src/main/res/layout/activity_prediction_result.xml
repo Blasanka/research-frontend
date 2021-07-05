@@ -28,11 +28,22 @@
         android:gravity="center">
 
         <TextView
-            android:id="@+id/flowerName"
+            android:id="@+id/flowerNameLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="1dp"
+            android:text="Flower name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/cardview_dark_background" />
+        <TextView
+            android:id="@+id/flowerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="1dp"
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="4dp"
             android:text="Red Ross"
@@ -40,11 +51,22 @@
             android:textColor="@color/black" />
 
         <TextView
-            android:id="@+id/identifiedDisease"
+            android:id="@+id/diseaseNameLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="1dp"
+            android:text="Identified disease"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/cardview_dark_background" />
+        <TextView
+            android:id="@+id/identifiedDisease"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="1dp"
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="4dp"
             android:text="Black Spot"
@@ -52,34 +74,75 @@
             android:textColor="@color/black" />
 
         <TextView
-            android:id="@+id/diseaseDescription"
+            android:id="@+id/diseaseDescriptionLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="1dp"
+            android:text="Disease description"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/cardview_dark_background" />
+        <TextView
+            android:id="@+id/diseaseDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="1dp"
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="4dp"
             android:text="This is occur when climate is hot"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@color/black" />
 
-        <TextView
-            android:id="@+id/accuracyLevel"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="start"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp">
+
+            <TextView
+                android:id="@+id/accuracyLevelLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="1dp"
+                android:text="Accuracy level:"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/cardview_dark_background" />
+
+            <TextView
+                android:id="@+id/accuracyLevel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="4dp"
+                android:text="Accuracy level"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/getHelpButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="50dp"
-            android:layout_marginBottom="4dp"
-            android:text="Accuracy level"
-            android:textColor="@color/black" />
+            android:layout_marginBottom="2dp"
+            android:text="GET HELP" />
 
         <Button
             android:id="@+id/closeButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="4dp"
             android:text="CLOSE" />

@@ -28,7 +28,11 @@ class PredictionResultActivity : AppCompatActivity() {
         if (result.diseaseDescription != null)
             binding.diseaseDescription.text = result.diseaseDescription
         if (result.accuracyLevel != null)
-            binding.accuracyLevel.text = result.accuracyLevel.toString()
+            binding.accuracyLevel.text = "${result.accuracyLevel}%"
+
+        binding.getHelpButton.setOnClickListener {
+            finish()
+        }
 
         binding.closeButton.setOnClickListener {
             finish()
