@@ -30,8 +30,10 @@ import com.example.floral.disease.ResultResponse
 import com.google.gson.GsonBuilder
 import com.kaopiz.kprogresshud.KProgressHUD
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -128,7 +130,7 @@ class DetectorFragment : Fragment() {
                 .build()
 
             val diseaseService = retrofit.create(DiseasesService::class.java)
-            val reqFile: RequestBody = RequestBody.create(MediaType.parse("image/*"), capturedFile.readBytes())
+            val reqFile: RequestBody = capturedFile.readBytes().toRequestBody("image/*".toMediaType())
             val body = MultipartBody.Part.createFormData("file", capturedFile.getName(), reqFile)
 //            val name: RequestBody = RequestBody.create(MediaType.parse("text/plain"), "upload_test")
             // Fetch the national data

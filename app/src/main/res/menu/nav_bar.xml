@@ -10,6 +10,11 @@
             android:icon="@drawable/ic_baseline_home_24"
             android:title="@string/sifaa_main"
             android:checked="true"/>
+        <item
+            android:id="@+id/detector"
+            android:icon="@drawable/crop_image_menu_flip"
+            android:title="@string/detector"
+            android:checked="false"/>
     </group>
 
     <group

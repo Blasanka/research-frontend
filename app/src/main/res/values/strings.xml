@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SIFAA</string>
     <string name="app_version_number">1.0.0</string>
-    <string name="detector">Detector</string>
+    <string name="detector">Disease Detector</string>
     <string name="select_photo_from_gallery">Select photo from gallery</string>
     <string name="take_picture_with_camera">Take picture with camera</string>
     <string name="prediction_result">Prediction Result</string>

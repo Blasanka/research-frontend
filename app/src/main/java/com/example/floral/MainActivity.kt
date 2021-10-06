@@ -426,6 +426,10 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
                 R.id.nav_flower_shop -> {
                     drawerLayout.closeDrawer(GravityCompat.START)
                 }
+                R.id.detector -> {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    Handler().postDelayed({ navigateToDetectorActivity() }, drawerDelay)
+                }
                 R.id.nav_profile -> {
                     drawerLayout.closeDrawer(GravityCompat.START)
                     Handler().postDelayed({ openUserProfileActivity() }, drawerDelay)
@@ -575,6 +579,12 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
             intent = Intent(applicationContext, SurveyActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun navigateToDetectorActivity() {
+        val diseaseFragment = DetectorFragment()
+        supportFragmentManager.beginTransaction().add(R.id.diseaseDetectorLayout, diseaseFragment)
+            .commit()
     }
 
     private fun openUserProfileActivity() {
