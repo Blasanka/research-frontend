@@ -1,16 +1,33 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Floral" parent="Theme.MaterialComponents.Light">
+    <style name="Theme.sifaa" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#E91E63</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">#FAE1E1</item>
+        <item name="colorPrimary">@color/flash_red_color</item>
+        <item name="colorPrimaryVariant">@color/flash_red_color</item>
+        <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">#E91E63</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">#FAE1E1</item>
+        <item name="colorSecondary">@color/flash_red_color</item>
+        <item name="colorSecondaryVariant">@color/flash_red_color</item>
+        <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="statusBarBackground">@color/status_bar</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/statusBarBackground</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+
         <!-- Customize your theme here. -->
+
+        <!-- Enable Window Content Transition -->
+        <item name="android:windowActivityTransitions">true</item>
     </style>
+
+    <color name="status_bar">#fff</color>
+
+    <style name="TimeDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/flash_red_color</item>
+        <item name="colorControlNormal">@color/flash_red_color</item>
+        <item name="buttonBarNegativeButtonStyle">@color/flash_red_color</item>
+        <item name="buttonBarPositiveButtonStyle">@color/flash_red_color</item>
+
+    </style>
+
 </resources>
