@@ -5,6 +5,7 @@
     <string name="select_photo_from_gallery">Select photo from gallery</string>
     <string name="take_picture_with_camera">Take picture with camera</string>
     <string name="prediction_result">Prediction Result</string>
+    <string name="title_activity_maps">Map</string>
 
     <string name="flower_categories">Flower Categories</string>
     <string name="sunflower">Sunflowers</string>
