@@ -26,7 +26,7 @@ open class SifaaDialogBottomSheetItem: BottomSheetDialogFragment() {
         val totalPrice = this.arguments?.getFloat("totalPrice")
         val totalItems = this.arguments?.getInt("totalItems")
 
-        view.findViewById<TextView>(R.id.total_ordered_text_view_items_price).text = "$%.2f".format(totalPrice)
+        view.findViewById<TextView>(R.id.total_ordered_text_view_items_price).text = "Rs. %.2f".format(totalPrice)
         view.findViewById<TextView>(R.id.total_ordered_text_view_items).text = "Your Order ($totalItems items)"
 
         val placeOrderBTN: Button = view.findViewById(R.id.btnPlaceOrder)
