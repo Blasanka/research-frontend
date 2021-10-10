@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import SifaaDataModels.SifaaCartItem
 import SifaaServices.DatabaseHandler
-import com.example.floral.R
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
@@ -150,7 +149,7 @@ class SifaaUserShopOrderActivity : AppCompatActivity(), SifaaOrderItemAdapter.On
 
     fun openPaymentActivity(view: View) {
 
-        val intent = Intent(this, SifaaPaymentActivity::class.java)
+        val intent = Intent(this, SifaaMethodPayment::class.java)
         intent.putExtra("totalItemPrice", sifaaAdapter.getTotalItemPrice())
         intent.putExtra("totalTaxPrice", sifaaAdapter.getTotalTax())
         intent.putExtra("subTotalPrice", sifaaAdapter.getSubTotalPrice())

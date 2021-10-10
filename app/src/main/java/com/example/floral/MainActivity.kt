@@ -45,11 +45,12 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.example.testfloral.RetrofitInstance
 import com.example.testfloral.Survey
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_survey.*
 import kotlinx.android.synthetic.main.sifaa_activity_demand.*
 import retrofit2.HttpException
 import java.io.IOException
-
+import java.lang.Exception
 
 
 class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListener,SifaaFloralItemAdapter.OnItemClickListener, FloralApi {
@@ -89,6 +90,7 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
     private var empName = ""
     private var empEmail = ""
     private var empGender = "male"
+    private var mmId = ""
     private var recItemValidatedName = ""
     private var zAxes = ArrayList<Int>()
     private var xAxes = ArrayList<Int>()
@@ -105,7 +107,7 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
     private var doubleBackToExit = false
     private lateinit var surveyList: ArrayList<Survey>
     var seekBarNormal: SeekBar? = null
-
+    private lateinit var sharedPref: SharedPreferences
     //val languages = resources.getStringArray(R.array.Languages)
 
 
@@ -143,6 +145,17 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+//        val strPassword: String = SifaaUserProfileActivity.eidd
+//        Log.e(strPassword, "gdgergeg")
+
+
+
+
+
+
+        sharedPref = getSharedPreferences("user_profile_details", MODE_PRIVATE)
+        loadUserProfile()
+
        spinnerValidator()
         tvRecMin.isVisible = false
 
@@ -167,6 +180,58 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
 
 
     }
+    private fun loadUserProfile() {
+
+        if(sharedPref.getString("emp_name", "none") != "none") {
+            //it will load the details from offline, so it doesn't need to connect with online database, it will be fast
+            loadOfflineUserProfile()
+        } else {
+            //if not saved, then save it offline
+            val editor = sharedPref.edit()
+
+            val user = FirebaseAuth.getInstance().currentUser!!
+
+            editor.putString("emp_name", user.displayName!!)
+            editor.putString("emp_email", user.email!!)
+
+            val databaseRef: DatabaseReference = FirebaseDatabase.getInstance().reference
+            databaseRef.child("employees")
+                .child(user.uid).addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+
+                        editor.putString("emp_id_no", snapshot.child("emp_id").value.toString())
+                        editor.putString("emp_mobile_no", snapshot.child("mobile_no").value.toString())
+                        editor.putString("emp_org", snapshot.child("organization").value.toString())
+                        editor.putString("emp_reg_id", snapshot.child("reg_id").value.toString())
+                        editor.putString("emp_reg_date", snapshot.child("reg_date").value.toString())
+                        editor.putString("emp_id_card_uri", snapshot.child("emp_id_card_uri").child("imageUrl").value.toString())
+
+                        editor.apply()
+                        loadOfflineUserProfile() //now load offline, because it is saved
+                    }
+                    override fun onCancelled(error: DatabaseError) {}
+                })
+        }
+    }
+    private fun loadOfflineUserProfile() {
+//        findViewById<TextView>(R.id.tvProfileTopName).text = sharedPref.getString("emp_name", "11")
+//        findViewById<TextView>(R.id.tvProfileTopEmail).text = sharedPref.getString("emp_email", "11")
+            mmId = sharedPref.getString("emp_id_no", "11").toString()
+//        findViewById<TextView>(R.id.tvProfileMobileNo).text = sharedPref.getString("emp_mobile_no", "11")
+//            mmId = sharedPref.getString("emp_org", "11").toString()
+        Log.e(mmId, "HttpException, unexpected response")
+//        findViewById<TextView>(R.id.tvProfileRegId).text = sharedPref.getString("emp_reg_id", "11")
+//        findViewById<TextView>(R.id.tvProfileRegDate).text = sharedPref.getString("emp_reg_date", "11")
+//
+//        val empIdCardUri = sharedPref.getString("emp_id_card_uri", "")
+//        try { // loading ID Card
+//            Picasso.get().load(empIdCardUri).into(findViewById<ImageView>(R.id.profile_id_card_iv))
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
+
+    }
+
     private fun spinnerValidator() {
         val languages = resources.getStringArray(R.array.Languages)
 
@@ -470,9 +535,7 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
                 R.id.nav_share_app -> {
                     shareApp()
                 }
-                R.id.nav_report_bug -> {
-                    Toast.makeText(this, "Not Available", Toast.LENGTH_SHORT).show()
-                }
+
                 R.id.nav_contact_us -> {
                     drawerLayout.closeDrawer(GravityCompat.START)
                     Handler().postDelayed({
@@ -666,7 +729,7 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
 
             //  progressBar2.isVisible = true
             val response = try {
-                RetrofitInstance.api.getRec()
+                RetrofitInstance.api.getRec(mmId)
 
             } catch (e: IOException) {
                 Log.e(TAG, "IOException, you might not have internet connection")
@@ -715,7 +778,7 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
 
                                 //  progressBar2.isVisible = true
                                 val response = try {
-                                    RetrofitInstance.api.getRec()
+                                    RetrofitInstance.api.getRec(mmId)
 
                                 } catch (e: IOException) {
                                     Log.e(TAG, "IOException, you might not have internet connection")
@@ -753,7 +816,7 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
 
                                 //  progressBar2.isVisible = true
                                 val response = try {
-                                    RetrofitInstance.api.getRec()
+                                    RetrofitInstance.api.getRec(mmId)
 
                                 } catch (e: IOException) {
                                     Log.e(TAG, "IOException, you might not have internet connection")
@@ -791,7 +854,7 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
 
                                 //  progressBar2.isVisible = true
                                 val response = try {
-                                    RetrofitInstance.api.getRec()
+                                    RetrofitInstance.api.getRec(mmId)
 
                                 } catch (e: IOException) {
                                     Log.e(TAG, "IOException, you might not have internet connection")
@@ -829,7 +892,7 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
 
                                 //  progressBar2.isVisible = true
                                 val response = try {
-                                    RetrofitInstance.api.getRec()
+                                    RetrofitInstance.api.getRec(mmId)
 
                                 } catch (e: IOException) {
                                     Log.e(TAG, "IOException, you might not have internet connection")
@@ -868,7 +931,7 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
 
                                 //  progressBar2.isVisible = true
                                 val response = try {
-                                    RetrofitInstance.api.getRec()
+                                    RetrofitInstance.api.getRec(mmId)
 
                                 } catch (e: IOException) {
                                     Log.e(TAG, "IOException, you might not have internet connection")
@@ -907,7 +970,7 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
 
                                 //  progressBar2.isVisible = true
                                 val response = try {
-                                    RetrofitInstance.api.getRec()
+                                    RetrofitInstance.api.getRec(mmId)
 
                                 } catch (e: IOException) {
                                     Log.e(TAG, "IOException, you might not have internet connection")
@@ -946,7 +1009,7 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
 
                                 //  progressBar2.isVisible = true
                                 val response = try {
-                                    RetrofitInstance.api.getRec()
+                                    RetrofitInstance.api.getRec(mmId)
 
                                 } catch (e: IOException) {
                                     Log.e(TAG, "IOException, you might not have internet connection")
@@ -985,7 +1048,7 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
 
                                 //  progressBar2.isVisible = true
                                 val response = try {
-                                    RetrofitInstance.api.getRec()
+                                    RetrofitInstance.api.getRec(mmId)
 
                                 } catch (e: IOException) {
                                     Log.e(TAG, "IOException, you might not have internet connection")
@@ -1041,7 +1104,8 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
 
             //  progressBar2.isVisible = true
             val response = try {
-                RetrofitInstance.api.getwri()
+
+                RetrofitInstance.api.getwri("${empName}::${empName}")
 
             } catch(e: IOException) {
                 Log.e(TAG, "IOException, you might not have internet connection")
