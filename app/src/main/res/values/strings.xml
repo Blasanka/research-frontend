@@ -13,11 +13,12 @@
     <string name="roses_flower">Roses</string>
     <string name="here_s_what_i_found_for_you">Here\'s what I found for you</string>
     <string name="here_s_what_i_rec_for_you">Here\'s what I recommend for you</string>
+    <string name="here_s_what_fav_for_you">Previously purchased Flowers</string>
     <string name="show_all">Show all</string>
     <string name="carnation_flower">Carnations</string>
-    <string name="short_item_description">Short Item Description</string>
+    <string name="short_flower_description">Short Description</string>
     <string name="item_name">Item Name</string>
-    <string name="default_price">$0.00</string>
+    <string name="default_rs">Rs 0.00</string>
     <string name="default_quantity">0</string>
     <string name="place_order">Place Order</string>
     <string name="your_order_default_items">Your Order (0 items)</string>
@@ -77,10 +78,10 @@
     <string name="date">DATE</string>
     <string name="total_amount">Total Amount</string>
     <string name="done">Done</string>
-    <string name="dollar">$</string>
+    <string name="rupee">Rs. </string>
     <string name="order_take_away_time">Order Take-away Time</string>
     <string name="cancel_order">Cancel Order</string>
-    <string name="processing">Processing</string>
+    <string name="loadings">Loading…</string>
     <string name="enter_your_upi_id">Enter your UPI ID</string>
     <string name="username_bank">username@bank</string>
     <string name="default_order_id">Order ID: CA124432</string>
@@ -96,6 +97,7 @@
     <string name="choose_image">Choose Image</string>
     <string name="description">Description</string>
     <string name="orders_history">Orders History</string>
+    <string name="purchased_history">Pchased History</string>
     <string name="my_favourites">My Favourites</string>
     <string name="ok">OK</string>
     <string name="my_orders">My Orders</string>
@@ -134,7 +136,7 @@
     <string name="report_bug">Report Bug</string>
     <string name="contact_us">Contact Us</string>
     <string name="message">Message</string>
-    <string name="have_a_problem">HAVE A PROBLEM !</string>
+    <string name="report_problems">Any Problems ?</string>
     <string name="call">Call</string>
     <string name="mail">Mail</string>
     <string name="bougainvilla_flower">Bougainvilleas</string>
@@ -147,10 +149,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="selected_item">Selected item:</string>
-        <string-array name="Languages">
-            <item>Show all</item>
-            <item>Sort by price</item>
-            <item>Sort by ratings</item>
-            <item>Type</item>
-        </string-array>
+    <string-array name="Languages">
+        <item>Show all</item>
+        <item>Sort by price</item>
+        <item>Sort by ratings</item>
+        <item>Type</item>
+    </string-array>
 </resources>
