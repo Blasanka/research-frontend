@@ -2,6 +2,7 @@ package com.example.floral.disease
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.ActionBar
 import com.example.floral.R
 import com.example.floral.databinding.ActivityPredictionResultBinding
@@ -16,8 +17,9 @@ class PredictionResultActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        supportActionBar?.title = getString(R.string.prediction_result)
-        actionBar?.setDisplayHomeAsUpEnabled(true)
+//        supportActionBar?.title = getString(R.string.prediction_result)
+//        actionBar?.setDisplayHomeAsUpEnabled(true)
+//        setSupportActionBar(binding.myToolbar)
 
         val response = intent.extras?.get("result") as ResultResponse
         val result = response.result;
@@ -37,5 +39,9 @@ class PredictionResultActivity : AppCompatActivity() {
         binding.closeButton.setOnClickListener {
             finish()
         }
+    }
+
+    fun goBack(view: View) {
+        onBackPressed()
     }
 }

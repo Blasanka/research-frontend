@@ -426,6 +426,10 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
                 R.id.nav_flower_shop -> {
                     drawerLayout.closeDrawer(GravityCompat.START)
                 }
+                R.id.detector -> {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    Handler().postDelayed({ navigateToDetectorActivity() }, drawerDelay)
+                }
                 R.id.nav_profile -> {
                     drawerLayout.closeDrawer(GravityCompat.START)
                     Handler().postDelayed({ openUserProfileActivity() }, drawerDelay)
@@ -577,6 +581,15 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
         }
     }
 
+    private fun navigateToDetectorActivity() {
+//        val diseaseFragment = DetectorFragment()
+//        supportFragmentManager.beginTransaction().add(R.id.diseaseDetectorLayout, diseaseFragment)
+//            .commit()
+        val intent = Intent(this, DetectorActivity::class.java)
+
+        startActivity(intent)
+    }
+
     private fun openUserProfileActivity() {
         val intent = Intent(this, SifaaUserProfileActivity::class.java)
         intent.putExtra("gender", this.empGender)
@@ -599,6 +612,12 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
     override fun onFetchSuccessListener(list: ArrayList<SifaaFloralItem>, requestType: RequestType) {
         val filterList = ArrayList<SifaaFloralItem>()
 
+        if (requestType == RequestType.READ) {
+            for (item in list) {
+                allItems.add(item)
+            }
+            sifaaFloralAdapter.notifyItemRangeInserted(0, allItems.size)
+        }
 //        seekBarNormal = findViewById(R.id.btntest2)
 //        seekBarNormal?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 //            override fun onProgressChanged(
