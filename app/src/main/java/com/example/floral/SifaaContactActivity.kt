@@ -54,8 +54,8 @@ class SifaaContactActivity : AppCompatActivity() {
         }
 
         AlertDialog.Builder(this)
-            .setMessage("Your query has been sent. We will reach you soon !!")
-            .setPositiveButton("OK", DialogInterface.OnClickListener {_, _ ->
+            .setMessage("Your Message has been sent. We will reach you soon !!")
+            .setPositiveButton("Done", DialogInterface.OnClickListener {_, _ ->
                 onBackPressed()
             })
             .setCancelable(false)
@@ -77,10 +77,10 @@ class SifaaContactActivity : AppCompatActivity() {
             intent.putExtra(Intent.EXTRA_CC,"mailcc@gmail.com")
             intent.type = "text/html"
             intent.setPackage("com.google.android.gm")
-            startActivity(Intent.createChooser(intent, "Send mail"))
+            startActivity(Intent.createChooser(intent, "Send Email"))
 
         }catch(e: Exception){
-            Toast.makeText(this, "Unable to send mail", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Unable to send Email", Toast.LENGTH_SHORT).show()
         }
     }
 
