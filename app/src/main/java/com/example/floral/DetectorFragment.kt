@@ -128,7 +128,7 @@ class DetectorFragment : Fragment() {
                 .build()
 
             val diseaseService = retrofit.create(DiseasesService::class.java)
-            val reqFile: RequestBody = RequestBody.create(MediaType.parse("image/*"), capturedFile.readBytes())
+            val reqFile: RequestBody = RequestBody.create(MediaType.get("image/*"), capturedFile.readBytes())
             val body = MultipartBody.Part.createFormData("file", capturedFile.getName(), reqFile)
 //            val name: RequestBody = RequestBody.create(MediaType.parse("text/plain"), "upload_test")
             // Fetch the national data
