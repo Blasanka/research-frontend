@@ -4,12 +4,14 @@
     package="com.example.floral">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.camera.autoFocus" />
+    <uses-feature android:name="android.hardware.camera.any" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -20,8 +22,13 @@
         android:theme="@style/Theme.sifaa"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+
         <activity android:name=".SifaaPrevious"></activity>
         <activity android:name="com.example.testfloral.SurveyActivity" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
         <activity android:name=".DemandActivity" />
         <activity android:name=".SifaaContactActivity" />
         <activity android:name=".SifaaSettingsActivity" />
@@ -37,8 +44,7 @@
             android:name=".SifaaOrderDoneActivity"
             android:configChanges="orientation|screenSize" />
         <activity android:name=".SifaaMethodPayment" />
-        <activity android:name=".SearchMenuActivity" />
-        <activity android:name=".PreviewDetailsActivity" />
+
         <activity android:name=".SifaaUserProfileActivity" />
         <activity android:name=".SifaaUserShopOrderActivity" />
         <activity
@@ -51,6 +57,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<!--        <activity-->
+<!--            android:name=".MapsActivity"-->
+<!--            android:label="@string/title_activity_maps" />-->
     </application>
 
 </manifest>
