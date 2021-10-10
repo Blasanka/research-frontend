@@ -1,5 +1,6 @@
-package com.example.testfloral
+package com.example.floral
 
+import SifaaDataModels.SifaaFloralItem
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -7,14 +8,11 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.floral.R
-import kotlinx.android.synthetic.main.activity_survey.*
 import kotlinx.android.synthetic.main.content_based_list.view.*
 
 class SurveyAdapter( private  val titles: List<String>,  private  val details: List<String>) : RecyclerView.Adapter<SurveyAdapter.SurveyViewHolder>() {
+
 
     inner class SurveyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.item_image_survey

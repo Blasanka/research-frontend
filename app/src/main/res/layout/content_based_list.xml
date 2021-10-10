@@ -25,7 +25,7 @@
             android:layout_height="25dp"
             android:padding="2dp"
             android:rotation="45"
-            android:src="@drawable/ic_add" />
+            android:src="@drawable/ic_sifaa_add" />
 
     </LinearLayout>
 
@@ -73,7 +73,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/montserrat_regular"
                 android:maxLines="2"
-                android:text="@string/short_item_description"
+                android:text="@string/short_flower_description"
                 android:textSize="12sp"
                 android:transitionName="itemDescTransition"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -81,10 +81,10 @@ class SifaaUserShopOrderActivity : AppCompatActivity(), SifaaOrderItemAdapter.On
 
     private fun loadOrderDetails() {
         totalItemsTV.text = "$totalItems items"
-        totalPriceTV.text = "\$%.2f".format(totalPrice)
-        totalTaxTV.text = "\$%.2f".format(totalTax)
-        subTotalTV.text = "\$%.2f".format(totalPrice+totalTax)
-        proceedToPayBtn.text = "Proceed to Pay \$%.2f".format(totalPrice+totalTax)
+        totalPriceTV.text = "Rs. %.2f".format(totalPrice)
+        totalTaxTV.text = "Rs. %.2f".format(totalTax)
+        subTotalTV.text = "Rs. %.2f".format(totalPrice+totalTax)
+        proceedToPayBtn.text = "Proceed to Pay Rs.%.2f".format(totalPrice+totalTax)
     }
 
     private fun loadRecyclerAdapter() {
@@ -149,7 +149,7 @@ class SifaaUserShopOrderActivity : AppCompatActivity(), SifaaOrderItemAdapter.On
 
     fun openPaymentActivity(view: View) {
 
-        val intent = Intent(this, SifaaPaymentActivity::class.java)
+        val intent = Intent(this, SifaaMethodPayment::class.java)
         intent.putExtra("totalItemPrice", sifaaAdapter.getTotalItemPrice())
         intent.putExtra("totalTaxPrice", sifaaAdapter.getTotalTax())
         intent.putExtra("subTotalPrice", sifaaAdapter.getSubTotalPrice())

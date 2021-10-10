@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import SifaaDataModels.SifaaFloralItem
+import android.annotation.SuppressLint
 import com.example.floral.R
 import com.squareup.picasso.Picasso
 import java.util.*
@@ -52,6 +53,7 @@ class SifaaFloralItemAdapter(
         return ItemListViewHolder(itemView)
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: ItemListViewHolder, position: Int) {
         val currentItem = itemListSifaa[position]
 
@@ -59,13 +61,15 @@ class SifaaFloralItemAdapter(
         else Picasso.get().load(currentItem.imageUrl).into(holder.itemImageIV)
 
         holder.itemNameTV.text = currentItem.itemName
-        holder.itemPriceTV.text = "$${currentItem.itemPrice}"
+        holder.itemPriceTV.text = "Rs. ${currentItem.itemPrice}"
         holder.itemStarsTV.text = currentItem.itemStars.toString()
         holder.itemShortDesc.text = currentItem.itemShortDesc
         holder.itemQuantityTV.text = currentItem.quantity.toString()
 
         holder.itemQuantityIncreaseIV.setOnClickListener {
             val n = currentItem.quantity
+            holder.itemQuantityIncreaseIV.setImageResource(R.drawable.ic_baseline_download_done_24)
+
             holder.itemQuantityTV.text = (n+1).toString()
 
             listener.onPlusBtnClick(currentItem)

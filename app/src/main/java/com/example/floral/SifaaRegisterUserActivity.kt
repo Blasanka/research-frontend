@@ -20,7 +20,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.pro.SifaaDetailsPreviewActivity
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import SifaaDataModels.SifaaIdCardModel
@@ -337,7 +336,7 @@ class SifaaRegisterUserActivity : AppCompatActivity() {
     }
 
     fun openPreviewActivity(view: View) {
-        val intent = Intent(this, SifaaDetailsPreviewActivity::class.java)
+        val intent = Intent(this, SifaaPreviewDetailsActivity::class.java)
 
         intent.putExtra("name", fullNameTextInputLayout.editText!!.text.toString())
         intent.putExtra("email", emailTIL.editText!!.text.toString())

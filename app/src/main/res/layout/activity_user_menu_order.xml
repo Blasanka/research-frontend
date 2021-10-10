@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SifaaUserShopOrderActivity"
-    android:background="#F5F5F5"
+    android:background="@drawable/phtestwp"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -91,9 +91,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
+
                 android:text="@string/order_details"
                 android:textSize="16sp"
-                android:textColor="@color/text_dark_color"
+                android:textColor="@color/black"
                 android:fontFamily="@font/montserrat_semi_bold"/>
 
             <LinearLayout
@@ -108,18 +109,19 @@
                     android:layout_height="wrap_content"
                     android:text="@string/total_price"
                     android:textSize="15sp"
-                    android:textColor="@color/text_light_color"/>
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/order_total_price_tv"
                     android:transitionName="totalOrderedItemsPriceTransition"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+
                     android:layout_height="wrap_content"
-                    android:text="@string/default_price"
+                    android:text="@string/default_rs"
                     android:textSize="15sp"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/text_light_color"/>
+                    android:textColor="@color/black"/>
 
             </LinearLayout>
 
@@ -135,17 +137,17 @@
                     android:layout_height="wrap_content"
                     android:text="@string/tax"
                     android:textSize="15sp"
-                    android:textColor="@color/text_light_color"/>
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/order_total_tax_tv"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="@string/default_price"
+                    android:text="@string/default_rs"
                     android:textSize="15sp"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/text_light_color"/>
+                    android:textColor="@color/black"/>
 
             </LinearLayout>
 
@@ -168,17 +170,17 @@
                     android:layout_height="wrap_content"
                     android:text="@string/sub_total"
                     android:textSize="15sp"
-                    android:textColor="@color/text_light_color"/>
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/order_sub_total_tv"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="@string/default_price"
+                    android:text="@string/default_rs"
                     android:textSize="15sp"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/text_light_color"/>
+                    android:textColor="@color/black"/>
 
             </LinearLayout>
 
@@ -189,7 +191,7 @@
                 android:layout_marginTop="25dp"
                 android:text="@string/time_for_take_away_of_order"
                 android:textSize="15sp"
-                android:textColor="@color/text_dark_color"
+                android:textColor="@color/black"
                 android:fontFamily="@font/montserrat_semi_bold"
                 app:drawableTint="@color/flash_red_color"
                 app:drawableEndCompat="@drawable/ic_time"
@@ -208,7 +210,7 @@
                     android:layout_height="wrap_content"
                     android:text="00:00 AM"
                     android:textSize="15sp"
-                    android:textColor="@color/text_light_color"/>
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:layout_width="wrap_content"

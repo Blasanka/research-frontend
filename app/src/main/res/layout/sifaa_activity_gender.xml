@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SifaaGenderSelectActivity">
+    tools:context=".SifaaGenderSelectActivity"
+    android:background="@drawable/phtestwp"
+    >
 
     <ImageView
         android:layout_width="60dp"
@@ -84,6 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:text="@string/select_your_gender"
+            android:textColor="@color/black"
             android:textSize="22sp"
             android:fontFamily="@font/montserrat_regular"/>
 
@@ -134,7 +137,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:text="@string/male"
-                        android:textColor="@color/purple_enabled_color"
+                        android:textColor="@color/black"
                         android:fontFamily="@font/montserrat_semi_bold"
                         app:layout_constraintTop_toBottomOf="@id/male_selected_circle"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -176,7 +179,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:text="@string/female"
-                        android:textColor="@color/purple_disabled_color"
+                        android:textColor="@color/black"
                         android:fontFamily="@font/montserrat_semi_bold"
                         app:layout_constraintTop_toBottomOf="@id/female_selected_circle"
                         app:layout_constraintBottom_toBottomOf="parent"

@@ -10,7 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-open class BottomSheetSelectedItemDialog: BottomSheetDialogFragment() {
+open class SifaaDialogBottomSheetItem: BottomSheetDialogFragment() {
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -26,10 +26,10 @@ open class BottomSheetSelectedItemDialog: BottomSheetDialogFragment() {
         val totalPrice = this.arguments?.getFloat("totalPrice")
         val totalItems = this.arguments?.getInt("totalItems")
 
-        view.findViewById<TextView>(R.id.total_ordered_items_price_tv).text = "$%.2f".format(totalPrice)
-        view.findViewById<TextView>(R.id.total_ordered_items_tv).text = "Your Order ($totalItems items)"
+        view.findViewById<TextView>(R.id.total_ordered_text_view_items_price).text = "Rs. %.2f".format(totalPrice)
+        view.findViewById<TextView>(R.id.total_ordered_text_view_items).text = "Your Order ($totalItems items)"
 
-        val placeOrderBTN: Button = view.findViewById(R.id.place_order_btn)
+        val placeOrderBTN: Button = view.findViewById(R.id.btnPlaceOrder)
         placeOrderBTN.setOnClickListener {
             if(totalItems != 0) {
                 val intent = Intent(context, SifaaUserShopOrderActivity::class.java)
@@ -39,7 +39,7 @@ open class BottomSheetSelectedItemDialog: BottomSheetDialogFragment() {
                 dismiss()
                 startActivity(intent)
             } else {
-                Toast.makeText(context, "Please select at-least 1 item", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Select One item to Continue", Toast.LENGTH_SHORT).show()
             }
         }
     }

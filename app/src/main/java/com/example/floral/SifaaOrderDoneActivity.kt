@@ -64,8 +64,8 @@ class SifaaOrderDoneActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.order_done_take_away_time).text = takeAwayTime
 
         Handler().postDelayed({
-            window.statusBarColor = resources.getColor(R.color.light_green)
-            window.navigationBarColor = resources.getColor(R.color.light_green)
+            window.statusBarColor = resources.getColor(R.color.flash_red_color)
+            window.navigationBarColor = resources.getColor(R.color.flash_red_color)
             processingLL.visibility = ViewGroup.INVISIBLE
             completeLL.visibility = ViewGroup.VISIBLE
                               }, 2000)

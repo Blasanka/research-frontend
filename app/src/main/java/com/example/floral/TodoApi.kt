@@ -1,7 +1,11 @@
-package com.example.testfloral
+package com.example.floral
 
+import com.example.testfloral.FavList
+import com.example.testfloral.RacAlgorithm
+import com.example.testfloral.Todo
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface TodoApi {
 
@@ -9,10 +13,15 @@ interface TodoApi {
     suspend fun getTodos(): Response<List<Todo>>
 
     //3,4,7
-    @GET("/api/v1.0/recommendations/3")
-    suspend fun getRec(): Response<List<RacAlgorithm>>
+    @GET("/api/v1.0/recommendations/{Id}")
+    suspend fun getRec(@Path("Id") employeeId: String): Response<List<RacAlgorithm>>
 
-    @GET("/api/v1.0/fav/3")
+    @GET("/api/v1.0/fav/{Id}")
     suspend fun getFav(): Response<List<FavList>>
 
+    @GET("/api/v1.0/writer/{Id}")
+    suspend fun getwri(@Path("Id") employeeId: String): Response<List<FavList>>
+
 }
+
+

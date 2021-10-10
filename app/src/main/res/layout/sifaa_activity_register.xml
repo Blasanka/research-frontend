@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".SifaaRegisterUserActivity"
     android:focusable="true"
+    android:background="@drawable/phtestwp"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true">
 
@@ -38,6 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="50dp"
                 android:text="@string/watch_your_flower"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 android:fontFamily="@font/montserrat_semi_bold"
                 android:layout_gravity="center"/>
@@ -53,6 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/full_name"
+                    android:background="@color/white"
                     android:inputType="text"
                     android:drawableStart="@drawable/ic_user"
                     android:drawablePadding="10dp"/>
@@ -69,6 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/e_mail"
+                    android:background="@color/white"
                     android:inputType="textEmailAddress"
                     android:drawableStart="@drawable/ic_email"
                     android:drawablePadding="10dp"/>
@@ -86,6 +90,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/company_organization"
                     android:inputType="text"
+                    android:background="@color/white"
                     android:drawableStart="@drawable/ic_organization"
                     android:drawablePadding="10dp"/>
 
@@ -102,6 +107,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/employee_id"
                     android:inputType="text"
+                    android:background="@color/white"
                     android:drawableStart="@drawable/ic_employee_id"
                     android:drawablePadding="10dp"/>
 
@@ -119,7 +125,8 @@
                     android:hint="@string/mobile_number"
                     android:inputType="number"
                     android:maxLength="10"
-                    android:drawableStart="@drawable/ic_mobile"
+                    android:background="@color/white"
+                    android:drawableStart="@drawable/ic_sifaa_mobile"
                     android:drawablePadding="10dp"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -135,6 +142,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/create_password"
+                    android:background="@color/white"
                     android:inputType="textPassword"
                     android:drawableStart="@drawable/ic_password_1"
                     android:drawablePadding="10dp"/>
@@ -152,6 +160,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/confirm_password"
+                    android:background="@color/white"
                     android:inputType="textPassword"
                     android:drawableStart="@drawable/ic_password_2"
                     android:drawablePadding="10dp"/>

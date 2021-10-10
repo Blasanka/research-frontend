@@ -23,11 +23,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
 
+        <activity android:name=".SifaaPrevious"></activity>
+        <activity android:name="com.example.testfloral.SurveyActivity" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-    <activity android:name="com.example.testfloral.SurveyActivity"></activity>
         <activity android:name=".DemandActivity" />
         <activity android:name=".DetectorActivity" />
         <activity android:name=".SifaaContactActivity" />
@@ -43,12 +44,10 @@
         <activity
             android:name=".SifaaOrderDoneActivity"
             android:configChanges="orientation|screenSize" />
-        <activity android:name=".SifaaPaymentActivity" />
-<!--        <activity android:name=".SearchMenuActivity" />-->
-<!--        <activity android:name=".PreviewDetailsActivity" />-->
+        <activity android:name=".SifaaMethodPayment" />
+
         <activity android:name=".SifaaUserProfileActivity" />
         <activity android:name=".SifaaUserShopOrderActivity" />
-
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />

@@ -1,12 +1,16 @@
 package com.example.testfloral
 
+import SifaaDataModels.SifaaFloralItem
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.floral.R
+import com.example.floral.SurveyAdapter
 import kotlinx.android.synthetic.main.activity_survey.*
+import retrofit2.HttpException
+import java.io.IOException
 
 class SurveyActivity : AppCompatActivity() {
     private val labels = ArrayList<String>()
@@ -133,6 +137,8 @@ class SurveyActivity : AppCompatActivity() {
 //                tvGetSurvey.text = cb05.text
 //            }
 //        }
+
+
     }
 
     private fun test(i: Int){
@@ -154,5 +160,7 @@ class SurveyActivity : AppCompatActivity() {
             Toast.makeText(this, "Sorry, You Can't Select More Than 5 Items, Try Again Later!", Toast.LENGTH_SHORT).show()
         }
     }
+
+
 
 }
