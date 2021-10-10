@@ -62,7 +62,7 @@ class DemandActivity : AppCompatActivity() {
                     labels.add(yAxes[i])
                     val barDataSet = BarDataSet(entries, "Cells")
                     val data = BarData(labels, barDataSet)
-                    barChartt.data = data // set the data and list of lables into chart
+                    barChartt.data = data
                     barDataSet.setColors(ColorTemplate.COLORFUL_COLORS)
                     barChartt.animateY(5000)
                 }
