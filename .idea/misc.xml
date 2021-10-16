@@ -6,18 +6,30 @@
         <entry key="..\:/Users/USER/StudioProjects/2021-132/app/src/main/res/layout/activity_main.xml" value="0.1897644927536232" />
         <entry key="..\:/Users/USER/StudioProjects/2021-132/app/src/main/res/layout/sifaa_activity_user_login.xml" value="0.1897644927536232" />
         <entry key="app/src/main/res/layout/activity_detector.xml" value="0.21653594970703127" />
+        <entry key="app/src/main/res/layout/activity_disease_detector.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/activity_disease_list.xml" value="0.14583333333333334" />
+        <entry key="app/src/main/res/layout/activity_disease_main.xml" value="0.3232169954476479" />
+        <entry key="app/src/main/res/layout/activity_flower_list.xml" value="0.23958333333333334" />
+        <entry key="app/src/main/res/layout/activity_insects_list.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.11666666666666667" />
         <entry key="app/src/main/res/layout/activity_prediction_result.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/disease_list_item.xml" value="0.23958333333333334" />
+        <entry key="app/src/main/res/layout/flower_list_item.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/layout/fragment_chart.xml" value="0.1734375" />
         <entry key="app/src/main/res/layout/fragment_detector.xml" value="0.1734375" />
+        <entry key="app/src/main/res/layout/insect_list_item.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/layout/layout_appbar.xml" value="0.1109375" />
         <entry key="app/src/main/res/layout/sifaa_activity_order_history.xml" value="0.1109375" />
         <entry key="app/src/main/res/layout/sifaa_activity_payment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/sifaa_activity_settings.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/sifaa_list_shop_item.xml" value="0.23958333333333334" />
       </map>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="SuppressKotlinCodeStyleNotification">
+    <option name="disableForAll" value="true" />
   </component>
 </project>

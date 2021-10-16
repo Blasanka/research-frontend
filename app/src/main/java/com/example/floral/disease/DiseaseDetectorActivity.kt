@@ -1,4 +1,4 @@
-package com.example.floral
+package com.example.floral.disease
 
 import android.Manifest
 import android.app.Activity
@@ -22,7 +22,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
-import com.example.floral.databinding.ActivityDetectorBinding
+import com.example.floral.databinding.ActivityDiseaseDetectorBinding
 import com.example.floral.disease.Constants
 import com.example.floral.disease.DiseasesService
 import com.example.floral.disease.PredictionResultActivity
@@ -39,7 +39,6 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.*
-import java.security.AccessController.getContext
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutionException
@@ -52,12 +51,12 @@ import kotlin.properties.Delegates
 
 typealias CornersListener = () -> Unit
 
-class DetectorActivity : AppCompatActivity() {
+class DiseaseDetectorActivity : AppCompatActivity() {
     private lateinit var diseaseData: ResultResponse
     private lateinit var capturedFile: File
     private var isOffline: Boolean = false
 
-    private lateinit var binding: ActivityDetectorBinding
+    private lateinit var binding: ActivityDiseaseDetectorBinding
 
     private var preview: Preview? = null
     private var cameraProvider: ProcessCameraProvider? = null
@@ -71,7 +70,7 @@ class DetectorActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetectorBinding.inflate(layoutInflater)
+        binding = ActivityDiseaseDetectorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 //        supportActionBar?.title = getString(R.string.disease_detector)
@@ -207,10 +206,10 @@ class DetectorActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    fun getOutputDirectory(): File {
+    private fun getOutputDirectory(): File {
         val mediaDir = this.externalMediaDirs?.firstOrNull()?.let {
-            File(it, resources.getString(R.string.app_name)).apply { mkdirs() }
+            // TODO: resources.getString(R.string.app_name)
+            File(it, "SIFAA").apply { mkdirs() }
         }
         return if (mediaDir != null && mediaDir.exists()) mediaDir else this.filesDir!!
     }
@@ -261,7 +260,7 @@ class DetectorActivity : AppCompatActivity() {
     }
 
     private fun startCamera() {
-        val viewFinder = binding.viewFinder
+//        val viewFinder = binding.viewFinder
 
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
@@ -293,30 +292,30 @@ class DetectorActivity : AppCompatActivity() {
             }
 
             // The display information
-            val metrics = DisplayMetrics().also { viewFinder.display.getRealMetrics(it) }
+//            val metrics = DisplayMetrics().also { viewFinder.display.getRealMetrics(it) }
             // The ratio for the output image and preview
-            val aspectRatio = aspectRatio(metrics.widthPixels, metrics.heightPixels)
+//            val aspectRatio = aspectRatio(metrics.widthPixels, metrics.heightPixels)
             // The display rotation
-            val rotation = viewFinder.display.rotation
+//            val rotation = viewFinder.display.rotation
 
             // The Configuration of camera preview
-            preview = Preview.Builder()
-                .setTargetAspectRatio(aspectRatio) // set the camera aspect ratio
-                .setTargetRotation(rotation) // set the camera rotation
-                .build()
+//            preview = Preview.Builder()
+//                .setTargetAspectRatio(aspectRatio) // set the camera aspect ratio
+//                .setTargetRotation(rotation) // set the camera rotation
+//                .build()
 
             // The Configuration of image capture
             imageCapture = ImageCapture.Builder()
                 .setCaptureMode(CAPTURE_MODE_MAXIMIZE_QUALITY) // setting to have pictures with highest quality possible (may be slow)
-                .setTargetAspectRatio(aspectRatio) // set the capture aspect ratio
-                .setTargetRotation(rotation) // set the capture rotation
+//                .setTargetAspectRatio(aspectRatio) // set the capture aspect ratio
+//                .setTargetRotation(rotation) // set the capture rotation
 //                .also { checkForHdrExtensionAvailability() }
                 .build()
 
             // The Configuration of image analyzing
             imageAnalyzer = ImageAnalysis.Builder()
-                .setTargetAspectRatio(aspectRatio) // set the analyzer aspect ratio
-                .setTargetRotation(rotation) // set the analyzer rotation
+//                .setTargetAspectRatio(aspectRatio) // set the analyzer aspect ratio
+//                .setTargetRotation(rotation) // set the analyzer rotation
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST) // in our analysis, we care about the latest image
                 .build()
 //                .also { setLuminosityAnalyzer(it) }
@@ -330,7 +329,7 @@ class DetectorActivity : AppCompatActivity() {
 
                 // Bind use cases to camera
                 cameraProvider?.bindToLifecycle(this, cameraSelector, imageAnalyzer, preview, imageCapture)
-                preview?.setSurfaceProvider(binding.viewFinder.surfaceProvider)
+//                preview?.setSurfaceProvider(binding.viewFinder.surfaceProvider)
             } catch (exc: Exception) {
                 Log.e(Constants.TAG, "Use case binding failed", exc)
             }
