@@ -33,7 +33,7 @@ class DiseasesListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemListViewHolder {
         val itemView =
-            LayoutInflater.from(parent.context).inflate(R.layout.disease_list_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.list_item_disease, parent, false)
 
         diseasesList = ArrayList(diseases)
         return ItemListViewHolder(itemView)
@@ -45,7 +45,6 @@ class DiseasesListAdapter(
         holder.diseaseIV.setImageResource(R.drawable.default_sifaa_image)
         holder.diseaseNameTV.text = disease.name
         holder.diseaseDesc.text = disease.description
-
 
         holder.itemView.setOnClickListener {
             listener.onItemClick(disease)

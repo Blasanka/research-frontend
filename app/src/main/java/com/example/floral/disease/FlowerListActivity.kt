@@ -22,8 +22,13 @@ class FlowerListActivity : AppCompatActivity(), FlowersListAdapter.OnItemClickLi
         val flowers = arrayListOf(
             Flower("1",
                 "default_sifaa_image",
-                getString(R.string.flower_rose),
-                getString(R.string.flower_info)
+                "Rose",
+                "A woody perennial flowering plant of the genus Rosa, in the family Rosaceae, or the flower it bears."
+            ),
+            Flower("2",
+                "default_sifaa_image",
+                "Sunflower",
+                "Helianthus is a genus comprising about 70 species of annual and perennial flowering plants in the daisy family Asteraceae."
             )
         );
 

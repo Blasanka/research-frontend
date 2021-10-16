@@ -13,7 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:passedText="@{@string/diseases}" />
+        app:passedText="@{@string/disease}" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/diseasesRv"
@@ -27,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_appbar"
-        tools:listitem="@layout/disease_list_item" />
+        tools:listitem="@layout/list_item_disease" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

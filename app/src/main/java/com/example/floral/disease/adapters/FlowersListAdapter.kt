@@ -33,7 +33,7 @@ class FlowersListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemListViewHolder {
         val itemView =
-            LayoutInflater.from(parent.context).inflate(R.layout.flower_list_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.list_item_flower, parent, false)
 
         flowersList = ArrayList(flowers)
         return ItemListViewHolder(itemView)

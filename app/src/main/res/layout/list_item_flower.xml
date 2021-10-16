@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="15"
-                android:text="@string/flower_rose"
+                android:text=""
                 android:fontFamily="@font/montserrat_semi_bold"
                 android:textColor="@color/text_dark_color"
                 android:textSize="18sp"/>
@@ -53,7 +53,7 @@
                 android:transitionName="flowerCat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/flower_info"
+                android:text=""
                 android:ellipsize="end"
                 android:fontFamily="@font/montserrat_regular"
                 android:textSize="12sp"/>

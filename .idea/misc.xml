@@ -19,6 +19,8 @@
         <entry key="app/src/main/res/layout/fragment_detector.xml" value="0.1734375" />
         <entry key="app/src/main/res/layout/insect_list_item.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/layout/layout_appbar.xml" value="0.1109375" />
+        <entry key="app/src/main/res/layout/list_item_flower.xml" value="0.13958333333333334" />
+        <entry key="app/src/main/res/layout/list_item_insect.xml" value="0.13958333333333334" />
         <entry key="app/src/main/res/layout/sifaa_activity_order_history.xml" value="0.1109375" />
         <entry key="app/src/main/res/layout/sifaa_activity_payment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/sifaa_activity_settings.xml" value="0.1" />

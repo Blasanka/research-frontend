@@ -22,8 +22,23 @@ class DiseaseListActivity : AppCompatActivity(), DiseasesListAdapter.OnItemClick
         val diseases = arrayListOf(
             Disease("1",
                 "default_sifaa_image",
-                getString(R.string.disease_mildew),
-                getString(R.string.disease_info)
+                "Powdery Mildew",
+                "Fungus that produces airborne spores from infected stems or buds on roses. After overwintering on your plants, the disease is most likely to flare up if the roots are in dry soil and the leaves are in humid air – conditions that are often found when plants are grown near or against a wall."
+            ),
+            Disease("2",
+                "default_sifaa_image",
+                "Botrytis",
+                "Also know as gray mold, is a fungal disease caused by several species in the genus Botrytis. It affects the buds, flowers, leaves, and bulbs of many plants including: African violet, begonia, chrysanthemum, cyclamen, dahlia, geranium, lily, peony, rose, and tulip."
+            ),
+            Disease("3",
+                "default_sifaa_image",
+                "Wilt",
+                "Plants suddenly wilt after warm, dry periods in early summer. Upper leaves droop; in a few days all leaves droop, and the plant dies. Plants may also bend over or break."
+            ),
+            Disease("4",
+                "Root Rot",
+                "Botrytis",
+                "When sunflower roots come in contact with the sclerotia, the sclerotia germinate and infect the roots. The fungus grows from the infected root into the taproot and forms a canker at the stem base."
             )
         );
 

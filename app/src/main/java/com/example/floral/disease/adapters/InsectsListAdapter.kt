@@ -33,7 +33,7 @@ class InsectsListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemListViewHolder {
         val itemView =
-            LayoutInflater.from(parent.context).inflate(R.layout.insect_list_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.list_item_insect, parent, false)
 
         insectsList = ArrayList(insects)
         return ItemListViewHolder(itemView)
@@ -45,7 +45,6 @@ class InsectsListAdapter(
         holder.insectIV.setImageResource(R.drawable.default_sifaa_image)
         holder.insectNameTV.text = insect.name
         holder.insectDesc.text = insect.description
-
 
         holder.itemView.setOnClickListener {
             listener.onItemClick(insect)
