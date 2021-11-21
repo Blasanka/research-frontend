@@ -33,6 +33,9 @@
         <activity
             android:name=".disease.FlowerListActivity"
             android:exported="true" />
+        <activity
+            android:name=".disease.PredictionResultActivity"
+            android:exported="true" />
         <activity android:name=".SifaaPrevious" />
         <activity android:name="com.example.testfloral.SurveyActivity" />
         <activity android:name=".DemandActivity" />

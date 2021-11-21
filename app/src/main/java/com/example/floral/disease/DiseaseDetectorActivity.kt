@@ -10,27 +10,21 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.camera.core.ImageCapture.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import com.example.floral.databinding.ActivityDiseaseDetectorBinding
-import com.example.floral.disease.Constants
-import com.example.floral.disease.DiseasesService
-import com.example.floral.disease.PredictionResultActivity
-import com.example.floral.disease.ResultResponse
 import com.google.gson.GsonBuilder
 import com.kaopiz.kprogresshud.KProgressHUD
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
@@ -44,10 +38,10 @@ import java.util.*
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
-import kotlin.properties.Delegates
 
 typealias CornersListener = () -> Unit
 
@@ -134,9 +128,14 @@ class DiseaseDetectorActivity : AppCompatActivity() {
         binding.submitImage.setOnClickListener {
             hud!!.show()
 
+            val client: OkHttpClient = OkHttpClient.Builder()
+                .connectTimeout(100, TimeUnit.SECONDS)
+                .readTimeout(100, TimeUnit.SECONDS).build()
+
             val gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create()
             val retrofit = Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
+                .client(client)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 
