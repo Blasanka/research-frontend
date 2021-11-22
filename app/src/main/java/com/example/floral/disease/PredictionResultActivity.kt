@@ -1,11 +1,13 @@
 package com.example.floral.disease
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.ActionBar
 import com.example.floral.R
 import com.example.floral.databinding.ActivityPredictionResultBinding
+import com.example.floral.knowledgebase.GetHelpDiseaseActivity
 
 class PredictionResultActivity : AppCompatActivity() {
 
@@ -33,7 +35,9 @@ class PredictionResultActivity : AppCompatActivity() {
             binding.accuracyLevel.text = "${result.accuracyLevel}%"
 
         binding.getHelpButton.setOnClickListener {
-            finish()
+            val intent = Intent(applicationContext, GetHelpDiseaseActivity::class.java)
+            intent.putExtra("result", result)
+            startActivity(intent)
         }
 
         binding.closeButton.setOnClickListener {

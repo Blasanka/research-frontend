@@ -8,6 +8,8 @@
     <string name="smart_detector">Smart detector</string>
     <string name="title_activity_maps">Map</string>
 
+    <string name="guidance">Guidance</string>
+
     <string name="flower_categories">Flower Categories</string>
     <string name="sunflower">Sunflowers</string>
     <string name="lilies_flower">Lilies</string>

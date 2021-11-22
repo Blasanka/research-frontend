@@ -25,6 +25,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
+            android:name=".knowledgebase.GetHelpDiseaseActivity"
+            android:exported="false" />
+        <activity
             android:name=".disease.InsectsListActivity"
             android:exported="false" />
         <activity
