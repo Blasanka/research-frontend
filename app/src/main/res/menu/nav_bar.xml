@@ -12,9 +12,14 @@
             android:checked="true"/>
         <item
             android:id="@+id/detector"
+            android:checked="false"
+            android:icon="@drawable/ic_user"
+            android:title="@string/detector" />
+        <item
+            android:id="@+id/sifaabot"
+            android:checked="false"
             android:icon="@drawable/crop_image_menu_flip"
-            android:title="@string/detector"
-            android:checked="false"/>
+            android:title="Ask From Bot" />
     </group>
 
     <group

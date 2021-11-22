@@ -525,6 +525,17 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
                         )
                     }, drawerDelay)
                 }
+                R.id.sifaabot -> {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    Handler().postDelayed({
+                        startActivity(
+                            Intent(
+                                this,
+                                SifaaKnowledgeBot::class.java
+                            )
+                        )
+                    }, drawerDelay)
+                }
                 R.id.nav_orders_history -> {
                     drawerLayout.closeDrawer(GravityCompat.START)
                     Handler().postDelayed({
