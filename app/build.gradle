@@ -80,6 +80,7 @@ dependencies {
 
     //himasha's libraeies
     implementation 'com.google.android.material:material:1.4.0'
+    compile 'com.squareup.okhttp:okhttp:x.x.x'
 
     // Coroutine Lifecycle Scopes
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"

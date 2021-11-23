@@ -24,7 +24,6 @@
         android:theme="@style/Theme.sifaa"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".SifaaKnowledgeBot"></activity>
         <activity android:name=".SifaaPrevious" />
         <activity android:name="com.example.testfloral.SurveyActivity" />
 
@@ -59,6 +58,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SifaaKnowledgeBot">android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter></activity>
     </application>
 
 </manifest>
