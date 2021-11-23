@@ -18,4 +18,8 @@
 
     <color name="button_enabled_color">#6173DF</color>
     <color name="button_disabled_color">#A0A0A1</color>
+
+<!--    <color name="teal_200">#FF03DAC5</color>-->
+<!--    <color name="teal_700">#FF018786</color>-->
+
 </resources>

@@ -15,6 +15,16 @@
             android:icon="@drawable/crop_image_menu_flip"
             android:title="@string/detector"
             android:checked="false"/>
+        <item
+            android:id="@+id/pathDraw"
+            android:icon="@drawable/crop_image_menu_flip"
+            android:title="@string/detector"
+            android:checked="false"/>
+        <item
+            android:id="@+id/price_range"
+            android:icon="@drawable/crop_image_menu_flip"
+            android:title="@string/detector"
+            android:checked="false"/>
     </group>
 
     <group
@@ -65,6 +75,10 @@
             android:id="@+id/nav_update_shop"
             android:icon="@drawable/ic_update"
             android:title="@string/update_shop"/>
+        <item
+            android:id="@+id/nav_maps"
+            android:icon="@drawable/ic_baseline_map_24"
+            android:title="Map"/>
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings"

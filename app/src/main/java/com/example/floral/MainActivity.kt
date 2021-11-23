@@ -488,6 +488,40 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
                         )
                     }, drawerDelay)
                 }
+                R.id.nav_maps -> {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    Handler().postDelayed({
+                        startActivity(
+                            Intent(
+                                this,
+                                MapsActivity::class.java
+                            )
+                        )
+                    }, drawerDelay)
+                }
+                R.id.pathDraw -> {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    Handler().postDelayed({
+                        startActivity(
+                            Intent(
+                                this,
+                                MainActivity2::class.java
+                            )
+                        )
+                    }, drawerDelay)
+                }
+
+                R.id.price_range -> {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    Handler().postDelayed({
+                        startActivity(
+                            Intent(
+                                this,
+                                MainActivity2::class.java
+                            )
+                        )
+                    }, drawerDelay)
+                }
                 R.id.nav_log_out -> {
                     drawerLayout.closeDrawer(GravityCompat.START)
                     logOutUser()
