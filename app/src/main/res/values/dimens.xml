@@ -10,5 +10,6 @@
 
     <dimen name="gender_selection_image_size">120dp</dimen>
     <dimen name="gender_selection_border_size">140dp</dimen>
+    <dimen name="button_size_small">100</dimen>
 
 </resources>

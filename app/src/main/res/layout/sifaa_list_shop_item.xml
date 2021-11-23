@@ -110,7 +110,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView3"
+                    android:id="@+id/detectorCv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:elevation="0dp"
@@ -161,7 +161,7 @@
                     android:background="#E8E8E8"
                     android:paddingHorizontal="20dp"
                     android:src="@drawable/ic_add_cart"
-                    app:layout_constraintEnd_toEndOf="@+id/cardView3"
+                    app:layout_constraintEnd_toEndOf="@+id/detectorCv"
                     app:tint="@color/flash_red_color"
                     tools:ignore="MissingConstraints" />
 

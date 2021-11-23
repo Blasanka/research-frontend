@@ -24,6 +24,10 @@
         android:theme="@style/Theme.sifaa"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+
+
+        <activity android:name=".SifaaKnowledgeBot"></activity>
+
         <activity android:name=".SifaaPrevious" />
         <activity android:name="com.example.testfloral.SurveyActivity" />
 
@@ -31,7 +35,26 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <activity
+            android:name=".knowledgebase.GetHelpDiseaseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".disease.InsectsListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".disease.DiseaseListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".disease.FlowerListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".disease.PredictionResultActivity"
+            android:exported="true" />
+<!--        <activity android:name=".SifaaPrevious" />-->
+<!--        <activity android:name="com.example.testfloral.SurveyActivity" />-->
         <activity android:name=".DemandActivity" />
+        <activity android:name=".DiseaseMainActivity" />
+        <activity android:name=".disease.DiseaseDetectorActivity" />
         <activity android:name=".SifaaContactActivity" />
         <activity android:name=".SifaaSettingsActivity" />
         <activity android:name=".SifaaMyCurrentOrdersActivity" />
@@ -58,12 +81,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SifaaKnowledgeBot">android:windowSoftInputMode="adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter></activity>
     </application>
 
 </manifest>
