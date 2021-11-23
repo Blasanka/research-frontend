@@ -43,6 +43,7 @@ import SifaaServices.SifaaFirebaseDBService
 import android.util.Log
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import com.example.floral.disease.DiseaseDetectorActivity
 import com.example.testfloral.RetrofitInstance
 import com.example.testfloral.Survey
 import com.squareup.picasso.Picasso
@@ -681,9 +682,12 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
     }
 
     private fun navigateToDetectorActivity() {
-        val diseaseFragment = DetectorFragment()
-        supportFragmentManager.beginTransaction().add(R.id.diseaseDetectorLayout, diseaseFragment)
-            .commit()
+//        val diseaseFragment = DetectorFragment()
+//        supportFragmentManager.beginTransaction().add(R.id.diseaseDetectorLayout, diseaseFragment)
+//            .commit()
+        val intent = Intent(this, DiseaseMainActivity::class.java)
+
+        startActivity(intent)
     }
 
     private fun openUserProfileActivity() {
