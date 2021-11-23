@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
@@ -9,6 +10,7 @@
     app:cardPreventCornerOverlap="false"
     android:clipToPadding="false"
     app:elevation="4dp"
+    app:cardBackgroundColor="@color/white"
     android:layout_marginHorizontal="10dp"
     android:layout_marginTop="5dp">
 
@@ -16,7 +18,7 @@
         android:id="@+id/remove_ordered_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#DD6060"
+        android:background="#ffffff"
         android:layout_gravity="end"
         android:visibility="invisible">
 
@@ -24,7 +26,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:padding="2dp"
-            android:src="@drawable/ic_add"
+            android:src="@drawable/ic_sifaa_add"
             android:rotation="45"/>
 
     </LinearLayout>
@@ -57,6 +59,7 @@
                 android:transitionName="itemNameTransition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLength="15"
                 android:text="@string/item_name"
                 android:fontFamily="@font/montserrat_semi_bold"
                 android:textColor="@color/text_dark_color"
@@ -67,7 +70,8 @@
                 android:transitionName="itemDescTransition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/short_item_description"
+                android:maxLength="15"
+                android:text="@string/short_flower_description"
                 android:maxLines="2"
                 android:ellipsize="end"
                 android:fontFamily="@font/montserrat_regular"
@@ -85,7 +89,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:text="@string/default_price"
+                    android:text="@string/default_rs"
                     android:textColor="@color/flash_red_color"
                     android:fontFamily="@font/montserrat_semi_bold"
                     android:textSize="16sp"/>
@@ -101,80 +105,91 @@
                     android:elevation="0dp"
                     app:cardCornerRadius="5dp">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:background="@color/flash_red_color"
-                        android:orientation="horizontal"
-                        android:paddingHorizontal="5dp">
 
-                        <TextView
-                            android:id="@+id/item_stars"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="5dp"
-                            android:text="4.2"
-
-                            android:textColor="@color/white"/>
-
-                        <ImageView
-                            android:layout_width="12dp"
-                            android:layout_height="12dp"
-                            android:src="@drawable/ic_star"/>
-
-                    </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/detectorCv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:cardCornerRadius="5dp"
                     android:elevation="0dp"
+                    android:visibility="invisible"
+                    app:cardBackgroundColor="#F5F5F5"
+                    app:cardCornerRadius="5dp"
                     app:cardElevation="0dp"
-                    app:cardBackgroundColor="#F5F5F5">
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                        android:visibility="invisible">
 
                         <ImageView
                             android:id="@+id/decrease_item_quantity_iv"
                             android:layout_width="20dp"
                             android:layout_height="wrap_content"
+                            android:background="#E8E8E8"
                             android:paddingHorizontal="2dp"
                             android:src="@drawable/ic_decrease"
-                            app:tint="@color/flash_red_color"
-                            android:background="#E8E8E8"/>
+                            android:visibility="invisible"
+                            app:tint="@color/flash_red_color" />
 
                         <TextView
                             android:id="@+id/item_quantity_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:paddingHorizontal="10dp"
                             android:text="@string/default_quantity"
                             android:textAlignment="center"
-                            android:paddingHorizontal="10dp"
-                            android:textColor="@color/text_dark_color"/>
-
-                        <ImageView
-                            android:id="@+id/increase_item_quantity_iv"
-                            android:layout_width="20dp"
-                            android:layout_height="wrap_content"
-                            android:paddingHorizontal="2dp"
-                            android:src="@drawable/ic_add_cart"
-                            app:tint="@color/flash_red_color"
-                            android:background="#E8E8E8"/>
+                            android:textColor="@color/text_dark_color"
+                            android:visibility="invisible" />
 
                     </LinearLayout>
 
+
                 </androidx.cardview.widget.CardView>
 
+                <ImageView
+                    android:id="@+id/increase_item_quantity_iv"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:background="#E8E8E8"
+                    android:paddingHorizontal="20dp"
+                    android:src="@drawable/ic_add_cart"
+                    app:layout_constraintEnd_toEndOf="@+id/detectorCv"
+                    app:tint="@color/flash_red_color"
+                    tools:ignore="MissingConstraints" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:visibility="invisible"
+                    android:background="@color/flash_red_color"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="5dp"
+                    tools:ignore="MissingConstraints">
+
+                    <TextView
+                        android:id="@+id/item_stars"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:text="4.2"
+
+                        android:textColor="@color/white"/>
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:src="@drawable/ic_sifaa_star"/>
+
+                </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>

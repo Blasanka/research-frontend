@@ -2,10 +2,13 @@
     <string name="app_name">SIFAA</string>
     <string name="app_version_number">1.0.0</string>
     <string name="detector">Disease Detector</string>
-    <string name="select_photo_from_gallery">Select photo from gallery</string>
-    <string name="take_picture_with_camera">Take picture with camera</string>
+    <string name="select_photo_from_gallery">Select from Gallery</string>
+    <string name="take_picture_with_camera">Capture Image</string>
     <string name="prediction_result">Prediction Result</string>
+    <string name="smart_detector">Smart detector</string>
     <string name="title_activity_maps">Map</string>
+
+    <string name="guidance">Guidance</string>
 
     <string name="flower_categories">Flower Categories</string>
     <string name="sunflower">Sunflowers</string>
@@ -18,11 +21,12 @@
     <string name="roses_flower">Roses</string>
     <string name="here_s_what_i_found_for_you">Here\'s what I found for you</string>
     <string name="here_s_what_i_rec_for_you">Here\'s what I recommend for you</string>
+    <string name="here_s_what_fav_for_you">Previously purchased Flowers</string>
     <string name="show_all">Show all</string>
     <string name="carnation_flower">Carnations</string>
-    <string name="short_item_description">Short Item Description</string>
+    <string name="short_flower_description">Short Description</string>
     <string name="item_name">Item Name</string>
-    <string name="default_price">$0.00</string>
+    <string name="default_rs">Rs 0.00</string>
     <string name="default_quantity">0</string>
     <string name="place_order">Place Order</string>
     <string name="your_order_default_items">Your Order (0 items)</string>
@@ -82,10 +86,10 @@
     <string name="date">DATE</string>
     <string name="total_amount">Total Amount</string>
     <string name="done">Done</string>
-    <string name="dollar">$</string>
+    <string name="rupee">Rs. </string>
     <string name="order_take_away_time">Order Take-away Time</string>
     <string name="cancel_order">Cancel Order</string>
-    <string name="processing">Processing</string>
+    <string name="loadings">Loading…</string>
     <string name="enter_your_upi_id">Enter your UPI ID</string>
     <string name="username_bank">username@bank</string>
     <string name="default_order_id">Order ID: CA124432</string>
@@ -101,6 +105,7 @@
     <string name="choose_image">Choose Image</string>
     <string name="description">Description</string>
     <string name="orders_history">Orders History</string>
+    <string name="purchased_history">Pchased History</string>
     <string name="my_favourites">My Favourites</string>
     <string name="ok">OK</string>
     <string name="my_orders">My Orders</string>
@@ -139,7 +144,7 @@
     <string name="report_bug">Report Bug</string>
     <string name="contact_us">Contact Us</string>
     <string name="message">Message</string>
-    <string name="have_a_problem">HAVE A PROBLEM !</string>
+    <string name="report_problems">Any Problems ?</string>
     <string name="call">Call</string>
     <string name="mail">Mail</string>
     <string name="bougainvilla_flower">Bougainvilleas</string>
@@ -152,18 +157,26 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="selected_item">Selected item:</string>
+
     <string name="latitude">latitude</string>
     <string name="longitude">longitude</string>
     <string name="update">update</string>
     <string name="find_user_s_location">find_user_s_location</string>
+
+    <string name="disease_detector">Disease Detector</string>
+    <string name="disease_detector_hint">Capture an image to identify flower disease in detector. Check available diseases and flowers at anytime</string>
+    <string name="insects">Insects</string>
+    <string name="flowers">Flowers</string>
+    <string name="disease">Diseases</string>
+    <string name="detector_label">Detector</string>
+    <string name="insect_info">Minute, slender insect with fringed wings.</string>
+    <string name="insect_thrips">Thrips</string>
     <string-array name="Languages">
         <item>Show all</item>
         <item>Sort by price</item>
         <item>Sort by ratings</item>
         <item>Type</item>
     </string-array>
-
-
     <!--    <string name="normal_map">Normal Map</string>-->
     <!--    <string name="hybrid_map">Hybrid Map</string>-->
     <!--    <string name="satellite_map">Satellite Map</string>-->
@@ -171,4 +184,5 @@
     <!--    <string name="lat_long_snippet">Lat: %1$.5f, Long: %2$.5f</string>-->
     <!--    <string name="dropped_pin">Dropped Pin</string>-->
     <!--    <string name="poi">poi</string>-->
+
 </resources>

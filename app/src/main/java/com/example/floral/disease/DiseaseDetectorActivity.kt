@@ -1,8 +1,7 @@
-package com.example.floral
+package com.example.floral.disease
 
 import android.Manifest
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -12,26 +11,20 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
+import androidx.camera.core.ImageCapture.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import com.example.floral.databinding.FragmentDetectorBinding
-import com.example.floral.disease.Constants
-import com.example.floral.disease.DiseasesService
-import com.example.floral.disease.PredictionResultActivity
-import com.example.floral.disease.ResultResponse
+import com.example.floral.databinding.ActivityDiseaseDetectorBinding
 import com.google.gson.GsonBuilder
 import com.kaopiz.kprogresshud.KProgressHUD
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
@@ -42,70 +35,82 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.ExecutionException
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 
 typealias CornersListener = () -> Unit
 
-class DetectorFragment : Fragment() {
+class DiseaseDetectorActivity : AppCompatActivity() {
     private lateinit var diseaseData: ResultResponse
     private lateinit var capturedFile: File
     private var isOffline: Boolean = false
 
-    private lateinit var binding: FragmentDetectorBinding
+    private lateinit var binding: ActivityDiseaseDetectorBinding
 
     private var preview: Preview? = null
+    private var cameraProvider: ProcessCameraProvider? = null
     private var imageCapture: ImageCapture? = null
     private var imageAnalyzer: ImageAnalysis? = null
-    private var camera: Camera? = null
-
-    private lateinit var safeContext: Context
 
     private lateinit var outputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
 
     private var hud: KProgressHUD? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = FragmentDetectorBinding.inflate(inflater, container, false)
+        binding = ActivityDiseaseDetectorBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        hud = KProgressHUD.create(activity)
+//        supportActionBar?.title = getString(R.string.disease_detector)
+//        actionBar?.setDisplayHomeAsUpEnabled(false)
+//        setSupportActionBar(binding.myToolbar)
+
+        hud = KProgressHUD.create(this)
             .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
             .setLabel("Please wait")
             .setCancellable(true);
 
         binding.selectPhotoFromGallery.setOnClickListener {
-            if(ActivityCompat.checkSelfPermission(activity!!,
+            if(ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
             {
-                requestPermissions(
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    2000);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(
+                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                        2000)
+                };
             }
             else {
                 val cameraIntent =
                     Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 cameraIntent.setType("image/*");
-                if (cameraIntent.resolveActivity(activity!!.getPackageManager()) != null) {
+                if (cameraIntent.resolveActivity(this.getPackageManager()) != null) {
                     startActivityForResult(cameraIntent, Constants.GALLERY_IMAGE_ACTIVITY_REQUEST_CODE);
                 }
             }
         }
 
         binding.selectPhotoFromGallery.setOnClickListener {
-            if(ActivityCompat.checkSelfPermission(activity!!,
+            if(ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
             {
-                requestPermissions(
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    2000);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(
+                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                        2000)
+                };
             }
             else {
                 val cameraIntent =
                     Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 cameraIntent.setType("image/*");
-                if (cameraIntent.resolveActivity(activity!!.getPackageManager()) != null) {
+                if (cameraIntent.resolveActivity(this.getPackageManager()) != null) {
                     startActivityForResult(cameraIntent, Constants.GALLERY_IMAGE_ACTIVITY_REQUEST_CODE);
                 }
             }
@@ -123,16 +128,21 @@ class DetectorFragment : Fragment() {
         binding.submitImage.setOnClickListener {
             hud!!.show()
 
+            val client: OkHttpClient = OkHttpClient.Builder()
+                .connectTimeout(100, TimeUnit.SECONDS)
+                .readTimeout(100, TimeUnit.SECONDS).build()
+
             val gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create()
             val retrofit = Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
+                .client(client)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 
             val diseaseService = retrofit.create(DiseasesService::class.java)
+//            val reqFile: RequestBody = RequestBody.create(MediaType.get("image/*"), capturedFile.readBytes())
             val reqFile: RequestBody = capturedFile.readBytes().toRequestBody("image/*".toMediaType())
             val body = MultipartBody.Part.createFormData("file", capturedFile.getName(), reqFile)
-//            val name: RequestBody = RequestBody.create(MediaType.parse("text/plain"), "upload_test")
             // Fetch the national data
             diseaseService.detectDisease(body).enqueue(object: Callback<ResultResponse> {
                 override fun onResponse(call: Call<ResultResponse>, response: Response<ResultResponse>) {
@@ -146,7 +156,7 @@ class DetectorFragment : Fragment() {
                     Log.i(Constants.TAG, "Update result view with predicted data")
                     Log.i(Constants.TAG, "${diseaseData.result}")
                     hud?.dismiss()
-                    val intent = Intent(activity, PredictionResultActivity::class.java)
+                    val intent = Intent(applicationContext, PredictionResultActivity::class.java)
                     intent.putExtra("result", diseaseData)
                     startActivity(intent)
                 }
@@ -158,18 +168,12 @@ class DetectorFragment : Fragment() {
             })
 
         }
-        return binding.root;
-    }
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         // Request camera permissions
         if (allPermissionsGranted()) {
             startCamera()
         } else {
-            ActivityCompat.requestPermissions(activity!!, Constants.REQUIRED_PERMISSIONS, Constants.REQUEST_CODE_PERMISSION)
+            ActivityCompat.requestPermissions(this, Constants.REQUIRED_PERMISSIONS, Constants.REQUEST_CODE_PERMISSION)
         }
 
         outputDirectory = getOutputDirectory()
@@ -178,20 +182,15 @@ class DetectorFragment : Fragment() {
 //        cameraExecutor = Executors.newCachedThreadPool()
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        safeContext = context
-    }
-
     private fun getStatusBarHeight(): Int {
-        val resourceId = safeContext.resources.getIdentifier("status_bar_height", "dimen", "android")
+        val resourceId = this.resources.getIdentifier("status_bar_height", "dimen", "android")
         return if (resourceId > 0) {
-            safeContext.resources.getDimensionPixelSize(resourceId)
+            this.resources.getDimensionPixelSize(resourceId)
         } else 0
     }
 
     private fun allPermissionsGranted() = Constants.REQUIRED_PERMISSIONS.all {
-        ContextCompat.checkSelfPermission(safeContext, it) == PackageManager.PERMISSION_GRANTED
+        ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -199,19 +198,19 @@ class DetectorFragment : Fragment() {
             if (allPermissionsGranted()) {
                 startCamera()
             } else {
-                Toast.makeText(safeContext, "Permissions not granted by the user.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Permissions not granted by the user.", Toast.LENGTH_SHORT).show()
 //                finish()
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    fun getOutputDirectory(): File {
-        val mediaDir = activity?.externalMediaDirs?.firstOrNull()?.let {
-            File(it, resources.getString(R.string.app_name)).apply { mkdirs() }
+    private fun getOutputDirectory(): File {
+        val mediaDir = this.externalMediaDirs?.firstOrNull()?.let {
+            // TODO: resources.getString(R.string.app_name)
+            File(it, "SIFAA").apply { mkdirs() }
         }
-        return if (mediaDir != null && mediaDir.exists()) mediaDir else activity?.filesDir!!
+        return if (mediaDir != null && mediaDir.exists()) mediaDir else this.filesDir!!
     }
 
     override fun onPause() {
@@ -236,7 +235,7 @@ class DetectorFragment : Fragment() {
 
         // Setup image capture listener which is triggered after photo has
         // been taken
-        imageCapture.takePicture(outputOptions, ContextCompat.getMainExecutor(safeContext), object : ImageCapture.OnImageSavedCallback {
+        imageCapture.takePicture(outputOptions, ContextCompat.getMainExecutor(this), object : ImageCapture.OnImageSavedCallback {
             override fun onError(exc: ImageCaptureException) {
                 Log.e(Constants.TAG, "Photo capture failed: ${exc.message}", exc)
             }
@@ -244,24 +243,32 @@ class DetectorFragment : Fragment() {
             override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                 val savedUri = Uri.fromFile(photoFile)
                 val msg = "Photo capture succeeded: $savedUri"
-                Toast.makeText(safeContext, msg, Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
                 Log.d(Constants.TAG, msg)
                 capturedFile = photoFile
             }
         })
     }
 
+    private fun aspectRatio(width: Int, height: Int): Int {
+        val previewRatio = max(width, height).toDouble() / min(width, height)
+        if (abs(previewRatio - RATIO_4_3_VALUE) <= abs(previewRatio - RATIO_16_9_VALUE)) {
+            return AspectRatio.RATIO_4_3
+        }
+        return AspectRatio.RATIO_16_9
+    }
+
     private fun startCamera() {
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(safeContext)
+//        val viewFinder = binding.viewFinder
+
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
         cameraProviderFuture.addListener(Runnable {
-            // Used to bind the lifecycle of cameras to the lifecycle owner
-            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
 
             // Preview
-            preview = Preview.Builder().build()
-
-            imageCapture = ImageCapture.Builder().build()
+//            preview = Preview.Builder().build()
+//
+//            imageCapture = ImageCapture.Builder().build()
 
 //            imageAnalyzer = ImageAnalysis.Builder().build().apply {
 //                setAnalyzer(Executors.newSingleThreadExecutor(), CornerAnalyzer {
@@ -272,25 +279,66 @@ class DetectorFragment : Fragment() {
 //                    // Do image analysis here if you need bitmap
 //                })
 //            }
+
+            try {
+                cameraProvider = cameraProviderFuture.get()
+            } catch (e: InterruptedException) {
+                Toast.makeText(applicationContext, "Error starting camera", Toast.LENGTH_SHORT).show()
+//                return@addListener
+            } catch (e: ExecutionException) {
+                Toast.makeText(applicationContext, "Error starting camera", Toast.LENGTH_SHORT).show()
+//                return@addListener
+            }
+
+            // The display information
+//            val metrics = DisplayMetrics().also { viewFinder.display.getRealMetrics(it) }
+            // The ratio for the output image and preview
+//            val aspectRatio = aspectRatio(metrics.widthPixels, metrics.heightPixels)
+            // The display rotation
+//            val rotation = viewFinder.display.rotation
+
+            // The Configuration of camera preview
+//            preview = Preview.Builder()
+//                .setTargetAspectRatio(aspectRatio) // set the camera aspect ratio
+//                .setTargetRotation(rotation) // set the camera rotation
+//                .build()
+
+            // The Configuration of image capture
+            imageCapture = ImageCapture.Builder()
+                .setCaptureMode(CAPTURE_MODE_MAXIMIZE_QUALITY) // setting to have pictures with highest quality possible (may be slow)
+//                .setTargetAspectRatio(aspectRatio) // set the capture aspect ratio
+//                .setTargetRotation(rotation) // set the capture rotation
+//                .also { checkForHdrExtensionAvailability() }
+                .build()
+
+            // The Configuration of image analyzing
+            imageAnalyzer = ImageAnalysis.Builder()
+//                .setTargetAspectRatio(aspectRatio) // set the analyzer aspect ratio
+//                .setTargetRotation(rotation) // set the analyzer rotation
+                .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST) // in our analysis, we care about the latest image
+                .build()
+//                .also { setLuminosityAnalyzer(it) }
+
             // Select back camera
             val cameraSelector = CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_BACK).build()
 
             try {
                 // Unbind use cases before rebinding
-                cameraProvider.unbindAll()
+                cameraProvider?.unbindAll()
 
                 // Bind use cases to camera
-                camera = cameraProvider.bindToLifecycle(this, cameraSelector, imageAnalyzer, preview, imageCapture)
-                preview?.setSurfaceProvider(binding.viewFinder.surfaceProvider)
+                cameraProvider?.bindToLifecycle(this, cameraSelector, imageAnalyzer, preview, imageCapture)
+//                preview?.setSurfaceProvider(binding.viewFinder.surfaceProvider)
             } catch (exc: Exception) {
                 Log.e(Constants.TAG, "Use case binding failed", exc)
             }
 
-        }, ContextCompat.getMainExecutor(safeContext))
+        }, ContextCompat.getMainExecutor(this))
 
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 val bmp = data?.extras!!["data"] as Bitmap?
@@ -316,7 +364,7 @@ class DetectorFragment : Fragment() {
         if(resultCode == Activity.RESULT_OK) {
             if(requestCode == Constants.GALLERY_IMAGE_ACTIVITY_REQUEST_CODE){
                 val returnUri = data?.data
-                val bitmapImage = MediaStore.Images.Media.getBitmap(activity!!.getContentResolver(), returnUri);
+                val bitmapImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), returnUri);
                 binding.image.setImageBitmap(bitmapImage);
                 capturedFile = File(outputDirectory, SimpleDateFormat(Constants.FILE_NAME_FORMAT, Locale.US).format(System.currentTimeMillis()) + ".jpg")
                 val os: OutputStream = BufferedOutputStream(FileOutputStream(capturedFile))
@@ -326,4 +374,18 @@ class DetectorFragment : Fragment() {
         }
     }
 
+    fun goBack(view: View) {
+        onBackPressed()
+    }
+
+    companion object {
+        private const val TAG = "CameraX"
+
+        const val KEY_FLASH = "sPrefFlashCamera"
+        const val KEY_GRID = "sPrefGridCamera"
+        const val KEY_HDR = "sPrefHDR"
+
+        private const val RATIO_4_3_VALUE = 4.0 / 3.0 // aspect ratio 4x3
+        private const val RATIO_16_9_VALUE = 16.0 / 9.0 // aspect ratio 16x9
+    }
 }

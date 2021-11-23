@@ -29,12 +29,37 @@
             android:name=".MainActivity2"
             android:exported="true" />
 
+
+        <activity android:name=".SifaaKnowledgeBot"></activity>
+
+        <activity android:name=".SifaaPrevious" />
+        <activity android:name="com.example.testfloral.SurveyActivity" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCGTJ2rqg7u6Pe4IdAj9ZNAaHmRpKOG_Nc" />
 
-        <activity android:name="com.example.testfloral.SurveyActivity" />
+        <activity
+            android:name=".knowledgebase.GetHelpDiseaseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".disease.InsectsListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".disease.DiseaseListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".disease.FlowerListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".disease.PredictionResultActivity"
+            android:exported="true" />
+<!--        <activity android:name=".SifaaPrevious" />-->
+<!--        <activity android:name="com.example.testfloral.SurveyActivity" />-->
+
         <activity android:name=".DemandActivity" />
+        <activity android:name=".DiseaseMainActivity" />
+        <activity android:name=".disease.DiseaseDetectorActivity" />
         <activity android:name=".SifaaContactActivity" />
         <activity android:name=".SifaaSettingsActivity" />
         <activity android:name=".SifaaMyCurrentOrdersActivity" />
@@ -49,8 +74,8 @@
         <activity
             android:name=".SifaaOrderDoneActivity"
             android:configChanges="orientation|screenSize" />
-        <activity android:name=".SifaaPaymentActivity" /> <!-- <activity android:name=".SearchMenuActivity" /> -->
-        <!-- <activity android:name=".PreviewDetailsActivity" /> -->
+
+        <activity android:name=".SifaaMethodPayment" />
         <activity android:name=".SifaaUserProfileActivity" />
         <activity android:name=".SifaaUserShopOrderActivity" />
         <activity

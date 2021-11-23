@@ -15,26 +15,26 @@ import androidx.recyclerview.widget.RecyclerView
 import SifaaDataModels.SifaaSavedCardItem
 import SifaaServices.DatabaseHandler
 
-class SifaaPaymentActivity : AppCompatActivity(), SifaaSavedCardsAdapter.OnItemClickListener {
+class SifaaMethodPayment : AppCompatActivity(), SifaaSavedCardsAdapter.OnItemClickListener {
 
-    private lateinit var totalPaymentTV: TextView
-    private lateinit var confirmPaymentBtn: Button
-    private lateinit var paymentWalletBtn: Button
-    private lateinit var paymentCreditDebitBtn: Button
-    private lateinit var paymentBhimUpiBtn: Button
+    private lateinit var totalTextViewPayment: TextView
+    private lateinit var confirmButtonPayment: Button
+    private lateinit var paymentButtonWallet: Button
+    private lateinit var paymentButtonCreditDebit: Button
+    private lateinit var paymentButtonBhimUpi: Button
 
-    private lateinit var cashPaymentRB: RadioButton
-    private lateinit var walletsRB: RadioButton
-    private lateinit var savedCardRB: RadioButton
-    private lateinit var creditDebitRB: RadioButton
-    private lateinit var bhimUpiRB: RadioButton
-    private lateinit var netBankingRB: RadioButton
+    private lateinit var cashRadioPayment: RadioButton
+    private lateinit var radioWallets: RadioButton
+    private lateinit var savedRadioCard: RadioButton
+    private lateinit var creditRadioDebit: RadioButton
+    private lateinit var bhimRadioUpi: RadioButton
+    private lateinit var netRadioBanking: RadioButton
 
-    private lateinit var walletSection: LinearLayout
-    private lateinit var creditDebitSection: LinearLayout
-    private lateinit var bhimUpiSection: LinearLayout
+    private lateinit var wSection: LinearLayout
+    private lateinit var cdSection: LinearLayout
+    private lateinit var biSection: LinearLayout
 
-    private lateinit var allWalletsLL: LinearLayout
+    private lateinit var allWalletsLinearLayout: LinearLayout
 
     var totalItemPrice = 0.0F
     var totalTaxPrice = 0.0F
@@ -75,19 +75,19 @@ class SifaaPaymentActivity : AppCompatActivity(), SifaaSavedCardsAdapter.OnItemC
 
         takeAwayTime = intent?.getStringExtra("takeAwayTime").toString()
 
-        totalPaymentTV = findViewById(R.id.total_payment_tv)
-        totalPaymentTV.text = "\$%.2f".format(subTotalPrice)
+        totalTextViewPayment = findViewById(R.id.total_payment_tv)
+        totalTextViewPayment.text = "\$%.2f".format(subTotalPrice)
 
-        cashPaymentRB = findViewById(R.id.cash_payment_radio_btn)
-        walletsRB = findViewById(R.id.wallets_radio_btn)
-        savedCardRB = findViewById(R.id.saved_cards_radio_btn)
-        creditDebitRB = findViewById(R.id.credit_debit_card_radio_btn)
-        bhimUpiRB = findViewById(R.id.bhim_upi_radio_btn)
-        netBankingRB = findViewById(R.id.net_banking_radio_btn)
+        cashRadioPayment = findViewById(R.id.cash_payment_radio_btn)
+        radioWallets = findViewById(R.id.wallets_radio_btn)
+        savedRadioCard = findViewById(R.id.saved_cards_radio_btn)
+        creditRadioDebit = findViewById(R.id.credit_debit_card_radio_btn)
+        bhimRadioUpi = findViewById(R.id.bhim_upi_radio_btn)
+        netRadioBanking = findViewById(R.id.net_banking_radio_btn)
 
-        walletSection = findViewById(R.id.wallets_section_ll)
-        creditDebitSection = findViewById(R.id.credit_debit_section_ll)
-        bhimUpiSection = findViewById(R.id.bhim_upi_section_ll)
+        wSection = findViewById(R.id.wallets_section_ll)
+        cdSection = findViewById(R.id.credit_debit_section_ll)
+        biSection = findViewById(R.id.bhim_upi_section_ll)
 
         setupPaymentButtons()
         setupWallets()
@@ -100,26 +100,26 @@ class SifaaPaymentActivity : AppCompatActivity(), SifaaSavedCardsAdapter.OnItemC
             this
         )
         savedCardRecyclerView.adapter = savedCardsSifaaAdapter
-        savedCardRecyclerView.layoutManager = LinearLayoutManager(this@SifaaPaymentActivity)
+        savedCardRecyclerView.layoutManager = LinearLayoutManager(this@SifaaMethodPayment)
 
         findViewById<ImageView>(R.id.payment_go_back_iv).setOnClickListener { onBackPressed() }
     }
 
     private fun setupWallets() {
-        allWalletsLL = findViewById(R.id.wallets_ll)
-        allWalletsLL.getChildAt(0).setOnClickListener {setClickedWallet(0)}
-        allWalletsLL.getChildAt(1).setOnClickListener {setClickedWallet(1)}
-        allWalletsLL.getChildAt(2).setOnClickListener {setClickedWallet(2)}
-        allWalletsLL.getChildAt(3).setOnClickListener {setClickedWallet(3)}
-        allWalletsLL.getChildAt(4).setOnClickListener {setClickedWallet(4)}
+        allWalletsLinearLayout = findViewById(R.id.wallets_ll)
+        allWalletsLinearLayout.getChildAt(0).setOnClickListener {setClickedWallet(0)}
+        allWalletsLinearLayout.getChildAt(1).setOnClickListener {setClickedWallet(1)}
+        allWalletsLinearLayout.getChildAt(2).setOnClickListener {setClickedWallet(2)}
+        allWalletsLinearLayout.getChildAt(3).setOnClickListener {setClickedWallet(3)}
+        allWalletsLinearLayout.getChildAt(4).setOnClickListener {setClickedWallet(4)}
         setClickedWallet(0) //by default selected wallet
     }
 
     private fun setClickedWallet(selectedWalletPos: Int) {
         for(i in 0..4) {
-            allWalletsLL.getChildAt(i).setBackgroundDrawable(resources.getDrawable(R.drawable.sifaa_border_unselect_option))
+            allWalletsLinearLayout.getChildAt(i).setBackgroundDrawable(resources.getDrawable(R.drawable.sifaa_border_unselect_option))
         }
-        allWalletsLL.getChildAt(selectedWalletPos).setBackgroundDrawable(resources.getDrawable(R.drawable.sifaa_border_option))
+        allWalletsLinearLayout.getChildAt(selectedWalletPos).setBackgroundDrawable(resources.getDrawable(R.drawable.sifaa_border_option))
 
         when(selectedWalletPos) {
             0 -> selectedWallet = "PayTM"
@@ -131,19 +131,19 @@ class SifaaPaymentActivity : AppCompatActivity(), SifaaSavedCardsAdapter.OnItemC
     }
 
     private fun setupPaymentButtons() {
-        confirmPaymentBtn = findViewById(R.id.confirm_payment_btn)
-        paymentWalletBtn = findViewById(R.id.payment_wallet_btn)
-        paymentCreditDebitBtn = findViewById(R.id.payment_credit_debit_card_btn)
-        paymentBhimUpiBtn = findViewById(R.id.payment_bhim_upi_btn)
+        confirmButtonPayment = findViewById(R.id.confirm_payment_btn)
+        paymentButtonWallet = findViewById(R.id.payment_wallet_btn)
+        paymentButtonCreditDebit = findViewById(R.id.payment_credit_debit_card_btn)
+        paymentButtonBhimUpi = findViewById(R.id.payment_bhim_upi_btn)
 
-        paymentWalletBtn.text = "Pay Securely \$%.2f".format(subTotalPrice)
-        paymentCreditDebitBtn.text = "Pay \$%.2f".format(subTotalPrice)
-        paymentBhimUpiBtn.text = "Pay \$%.2f".format(subTotalPrice)
+        paymentButtonWallet.text = "Pay Securely \$%.2f".format(subTotalPrice)
+        paymentButtonCreditDebit.text = "Pay \$%.2f".format(subTotalPrice)
+        paymentButtonBhimUpi.text = "Pay \$%.2f".format(subTotalPrice)
 
-        confirmPaymentBtn.setOnClickListener { orderDone() }
-        paymentWalletBtn.setOnClickListener { orderDone() }
-        paymentCreditDebitBtn.setOnClickListener { doCreditDebitCardPayment() }
-        paymentBhimUpiBtn.setOnClickListener { doBHIMUPIPayment() }
+        confirmButtonPayment.setOnClickListener { orderDone() }
+        paymentButtonWallet.setOnClickListener { orderDone() }
+        paymentButtonCreditDebit.setOnClickListener { doCreditDebitCardPayment() }
+        paymentButtonBhimUpi.setOnClickListener { doBHIMUPIPayment() }
     }
 
     private fun doBHIMUPIPayment() {
@@ -209,45 +209,45 @@ class SifaaPaymentActivity : AppCompatActivity(), SifaaSavedCardsAdapter.OnItemC
             (((view as CardView).getChildAt(0) as LinearLayout).getChildAt(1) as TextView).text.toString()
         }
 
-        cashPaymentRB.isChecked = false
-        walletsRB.isChecked = false
-        savedCardRB.isChecked = false
-        creditDebitRB.isChecked = false
-        bhimUpiRB.isChecked = false
-        netBankingRB.isChecked = false
+        cashRadioPayment.isChecked = false
+        radioWallets.isChecked = false
+        savedRadioCard.isChecked = false
+        creditRadioDebit.isChecked = false
+        bhimRadioUpi.isChecked = false
+        netRadioBanking.isChecked = false
 
-        walletSection.visibility = ViewGroup.GONE
-        creditDebitSection.visibility = ViewGroup.GONE
-        bhimUpiSection.visibility = ViewGroup.GONE
+        wSection.visibility = ViewGroup.GONE
+        cdSection.visibility = ViewGroup.GONE
+        biSection.visibility = ViewGroup.GONE
         savedCardRecyclerView.visibility = ViewGroup.GONE
 
-        confirmPaymentBtn.visibility = ViewGroup.INVISIBLE
+        confirmButtonPayment.visibility = ViewGroup.INVISIBLE
 
         when(payMethod) {
             getString(R.string.cash_payment) -> {
-                cashPaymentRB.isChecked = true
-                confirmPaymentBtn.visibility = ViewGroup.VISIBLE
+                cashRadioPayment.isChecked = true
+                confirmButtonPayment.visibility = ViewGroup.VISIBLE
             }
             getString(R.string.wallets) -> {
-                walletsRB.isChecked = true
-                walletSection.visibility = ViewGroup.VISIBLE
+                radioWallets.isChecked = true
+                wSection.visibility = ViewGroup.VISIBLE
             }
             getString(R.string.saved_cards) -> {
-                savedCardRB.isChecked = true
+                savedRadioCard.isChecked = true
                 savedCardRecyclerView.visibility = ViewGroup.VISIBLE
                 loadSavedCardsFromDatabase()
             }
             getString(R.string.credit_or_debit_card) -> {
-                creditDebitRB.isChecked = true
-                creditDebitSection.visibility = ViewGroup.VISIBLE
+                creditRadioDebit.isChecked = true
+                cdSection.visibility = ViewGroup.VISIBLE
             }
             getString(R.string.bhim_upi) -> {
-                bhimUpiRB.isChecked = true
-                bhimUpiSection.visibility = ViewGroup.VISIBLE
+                bhimRadioUpi.isChecked = true
+                biSection.visibility = ViewGroup.VISIBLE
             }
             getString(R.string.net_banking) -> {
                 Toast.makeText(this, "NOT AVAILABLE", Toast.LENGTH_SHORT).show()
-                netBankingRB.isChecked = true
+                netRadioBanking.isChecked = true
             }
         }
     }
@@ -255,12 +255,12 @@ class SifaaPaymentActivity : AppCompatActivity(), SifaaSavedCardsAdapter.OnItemC
     private fun orderDone() {
         var paymentMethod = ""
         when {
-            cashPaymentRB.isChecked -> paymentMethod = "Pending: Cash Payment"
-            walletsRB.isChecked -> paymentMethod = "Paid: $selectedWallet Wallet"
-            savedCardRB.isChecked -> paymentMethod = "Paid: $selectedSavedCard"
-            creditDebitRB.isChecked -> paymentMethod = "Paid: $enteredCreditDebitCard"
-            bhimUpiRB.isChecked -> paymentMethod = "Paid: $enteredUPI"
-            //netBankingRB.isChecked -> paymentMethod = "Paid: Net Banking"
+            cashRadioPayment.isChecked -> paymentMethod = "Pending: Cash Payment"
+            radioWallets.isChecked -> paymentMethod = "Paid: $selectedWallet Wallet"
+            savedRadioCard.isChecked -> paymentMethod = "Paid: $selectedSavedCard"
+            creditRadioDebit.isChecked -> paymentMethod = "Paid: $enteredCreditDebitCard"
+            bhimRadioUpi.isChecked -> paymentMethod = "Paid: $enteredUPI"
+            //netRadioBanking.isChecked -> paymentMethod = "Paid: Net Banking"
         }
 
         val intent = Intent(this, SifaaOrderDoneActivity::class.java)

@@ -3,8 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/USER/StudioProjects/2021-132/app/src/main/res/drawable/sifaa_border_option.xml" value="0.11666666666666667" />
         <entry key="..\:/Users/USER/StudioProjects/2021-132/app/src/main/res/layout/activity_main.xml" value="0.1897644927536232" />
+        <entry key="..\:/Users/USER/StudioProjects/2021-132/app/src/main/res/layout/activity_main2.xml" value="0.14628623188405798" />
+        <entry key="..\:/Users/USER/StudioProjects/2021-132/app/src/main/res/layout/activity_maps.xml" value="0.1766304347826087" />
+        <entry key="..\:/Users/USER/StudioProjects/2021-132/app/src/main/res/layout/activity_price_range.xml" value="0.1403985507246377" />
+        <entry key="..\:/Users/USER/StudioProjects/2021-132/app/src/main/res/layout/content_based_list.xml" value="0.1" />
         <entry key="..\:/Users/USER/StudioProjects/2021-132/app/src/main/res/layout/sifaa_activity_user_login.xml" value="0.1897644927536232" />
+        <entry key="..\:/Users/USER/StudioProjects/2021-132/app/src/main/res/layout/sifaa_splash_activity.xml" value="0.13451086956521738" />
+        <entry key="..\:/Users/USER/StudioProjects/2021-132/app/src/main/res/menu/map_options.xml" value="0.2" />
+        <entry key="..\:/Users/USER/StudioProjects/2021-132/app/src/main/res/menu/nav_bar.xml" value="0.2" />
       </map>
     </option>
   </component>

@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.floral.R
 import com.squareup.picasso.Picasso
 import SifaaDataModels.SifaaCartItem
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.Constraints
 
 class SifaaOrderItemAdapter(var context: Context,
                             private val itemOrderedListSifaa: ArrayList<SifaaCartItem>,
@@ -37,7 +39,7 @@ class SifaaOrderItemAdapter(var context: Context,
 
     class ItemListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val itemImageIV: ImageView = itemView.findViewById(R.id.item_image)
-        val removeOrderedItem: LinearLayout = itemView.findViewById(R.id.remove_ordered_item)
+        val removeOrderedItem: ConstraintLayout = itemView.findViewById(R.id.remove_ordered_item)
         val itemNameTV: TextView = itemView.findViewById(R.id.item_name)
         val itemPriceTV: TextView = itemView.findViewById(R.id.item_price)
         val itemStarsTV: TextView = itemView.findViewById(R.id.item_stars)
@@ -61,7 +63,7 @@ class SifaaOrderItemAdapter(var context: Context,
         else Picasso.get().load(currentItem.imageUrl).into(holder.itemImageIV)
 
         holder.itemNameTV.text = currentItem.itemName
-        holder.itemPriceTV.text = "$${currentItem.itemPrice}"
+        holder.itemPriceTV.text = "Rs. ${currentItem.itemPrice}"
         holder.itemStarsTV.text = currentItem.itemStars.toString()
         holder.itemShortDesc.text = currentItem.itemShortDesc
 

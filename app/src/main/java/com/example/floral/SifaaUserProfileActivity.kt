@@ -11,9 +11,12 @@ import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.lang.Exception
 
+
 class SifaaUserProfileActivity : AppCompatActivity() {
 
     private lateinit var sharedPref: SharedPreferences
+
+
 
     override fun onStart() {
         super.onStart()
@@ -24,6 +27,8 @@ class SifaaUserProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.sifaa_activity_user_profile)
 
+
+
         val gender = intent?.getStringExtra("gender")
         if(gender == "female") {
             findViewById<CircleImageView>(R.id.profile_user_icon).setImageDrawable(resources.getDrawable(R.drawable.user_famale))
@@ -31,7 +36,12 @@ class SifaaUserProfileActivity : AppCompatActivity() {
 
         sharedPref = getSharedPreferences("user_profile_details", MODE_PRIVATE)
         loadUserProfile()
+
     }
+//    companion object{
+//
+//        val eidd: String = test
+//    }
 
     private fun loadUserProfile() {
 
@@ -82,7 +92,10 @@ class SifaaUserProfileActivity : AppCompatActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+
     }
+
+
 
     fun goBack(view: View) {onBackPressed()}
 }

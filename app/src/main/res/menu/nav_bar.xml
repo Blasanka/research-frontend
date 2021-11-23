@@ -12,19 +12,19 @@
             android:checked="true"/>
         <item
             android:id="@+id/detector"
-            android:icon="@drawable/crop_image_menu_flip"
-            android:title="@string/detector"
-            android:checked="false"/>
+            android:checked="false"
+            android:icon="@drawable/ic_user"
+            android:title="@string/detector" />
         <item
-            android:id="@+id/pathDraw"
+            android:id="@+id/sifaabot"
+            android:checked="false"
             android:icon="@drawable/crop_image_menu_flip"
-            android:title="@string/detector"
-            android:checked="false"/>
+            android:title="Ask From Bot" />
         <item
-            android:id="@+id/price_range"
-            android:icon="@drawable/crop_image_menu_flip"
-            android:title="@string/detector"
-            android:checked="false"/>
+            android:id="@+id/clusterAnalysis"
+            android:checked="false"
+            android:icon="@android:drawable/ic_menu_mapmode"
+            android:title="Ask From Bot" />
     </group>
 
     <group
@@ -44,6 +44,10 @@
                     android:id="@+id/nav_orders_history"
                     android:icon="@drawable/ic_order_history"
                     android:title="@string/orders_history"/>
+                <item
+                    android:id="@+id/nav_purchased_history"
+                    android:icon="@drawable/ic_baseline_shopping_bag_24"
+                    android:title="@string/purchased_history"/>
             </menu>
         </item>
     </group>
@@ -57,13 +61,10 @@
                     android:id="@+id/nav_share_app"
                     android:icon="@drawable/ic_share"
                     android:title="@string/share_app"/>
-                <item
-                    android:id="@+id/nav_report_bug"
-                    android:icon="@drawable/ic_report_bug"
-                    android:title="@string/report_bug"/>
+
                 <item
                     android:id="@+id/nav_contact_us"
-                    android:icon="@drawable/ic_mobile"
+                    android:icon="@drawable/ic_sifaa_mobile"
                     android:title="@string/contact_us"/>
             </menu>
         </item>
@@ -81,7 +82,7 @@
             android:title="Map"/>
         <item
             android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_settings"
+            android:icon="@drawable/ic_sifaa_settings"
             android:title="@string/settings"/>
     </group>
 

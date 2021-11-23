@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.sifaa" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.sifaa" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/flash_red_color</item>
         <item name="colorPrimaryVariant">@color/flash_red_color</item>

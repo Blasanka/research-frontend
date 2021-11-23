@@ -43,14 +43,15 @@ import SifaaServices.SifaaFirebaseDBService
 import android.util.Log
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import com.example.floral.disease.DiseaseDetectorActivity
 import com.example.testfloral.RetrofitInstance
 import com.example.testfloral.Survey
-import com.example.testfloral.SurveyActivity
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_survey.*
 import kotlinx.android.synthetic.main.sifaa_activity_demand.*
 import retrofit2.HttpException
 import java.io.IOException
-
+import java.lang.Exception
 
 
 class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListener,SifaaFloralItemAdapter.OnItemClickListener, FloralApi {
@@ -58,7 +59,7 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
     private lateinit var auth: FirebaseAuth
     private lateinit var databaseRef: DatabaseReference
 
-    val TAG = "Main"
+    val TAG = "SIFAA"
 
     private val db = DatabaseHandler(this)
 
@@ -76,6 +77,7 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
     private lateinit var sifaaFloralAdapter: SifaaFloralItemAdapter
     private lateinit var sifaaRecAdapter: SifaaRecItemAdapter
     private lateinit var sifaaFavAdapter: SifaaFloralFavAdapter
+    private var count = 0
 
     private lateinit var userIcon: CircleImageView
     private lateinit var showAllSwitch: SwitchCompat
@@ -89,15 +91,24 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
     private var empName = ""
     private var empEmail = ""
     private var empGender = "male"
+    private var mmId = ""
     private var recItemValidatedName = ""
     private var zAxes = ArrayList<Int>()
-    private var zPlusAxes = ArrayList<Int>()
+    private var xAxes = ArrayList<Int>()
+    private var aAxes = ArrayList<Int>()
+    private var bAxes = ArrayList<Int>()
+    private var cAxes = ArrayList<Int>()
+    private var dAxes = ArrayList<Int>()
+    private var eAxes = ArrayList<Int>()
+    private var fAxes = ArrayList<Int>()
+    private var gAxes = ArrayList<Int>()
+
 
     private var searchIsActive = false
     private var doubleBackToExit = false
     private lateinit var surveyList: ArrayList<Survey>
     var seekBarNormal: SeekBar? = null
-
+    private lateinit var sharedPref: SharedPreferences
     //val languages = resources.getStringArray(R.array.Languages)
 
 
@@ -129,13 +140,25 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
         Handler().postDelayed({ doubleBackToExit = false }, 2000)
     }
 
+    //val languages = resources.getStringArray(R.array.Languages)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+//        val strPassword: String = SifaaUserProfileActivity.eidd
+//        Log.e(strPassword, "gdgergeg")
+
+
+
+
+
+
+        sharedPref = getSharedPreferences("user_profile_details", MODE_PRIVATE)
+        loadUserProfile()
 
        spinnerValidator()
-
+        tvRecMin.isVisible = false
 
         btnSurvey.isVisible = false
 
@@ -154,8 +177,62 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
             openUserProfileActivity()
         }
 
+        //val languages = resources.getStringArray(R.array.Languages)
+
 
     }
+    private fun loadUserProfile() {
+
+        if(sharedPref.getString("emp_name", "none") != "none") {
+            //it will load the details from offline, so it doesn't need to connect with online database, it will be fast
+            loadOfflineUserProfile()
+        } else {
+            //if not saved, then save it offline
+            val editor = sharedPref.edit()
+
+            val user = FirebaseAuth.getInstance().currentUser!!
+
+            editor.putString("emp_name", user.displayName!!)
+            editor.putString("emp_email", user.email!!)
+
+            val databaseRef: DatabaseReference = FirebaseDatabase.getInstance().reference
+            databaseRef.child("employees")
+                .child(user.uid).addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+
+                        editor.putString("emp_id_no", snapshot.child("emp_id").value.toString())
+                        editor.putString("emp_mobile_no", snapshot.child("mobile_no").value.toString())
+                        editor.putString("emp_org", snapshot.child("organization").value.toString())
+                        editor.putString("emp_reg_id", snapshot.child("reg_id").value.toString())
+                        editor.putString("emp_reg_date", snapshot.child("reg_date").value.toString())
+                        editor.putString("emp_id_card_uri", snapshot.child("emp_id_card_uri").child("imageUrl").value.toString())
+
+                        editor.apply()
+                        loadOfflineUserProfile() //now load offline, because it is saved
+                    }
+                    override fun onCancelled(error: DatabaseError) {}
+                })
+        }
+    }
+    private fun loadOfflineUserProfile() {
+//        findViewById<TextView>(R.id.tvProfileTopName).text = sharedPref.getString("emp_name", "11")
+//        findViewById<TextView>(R.id.tvProfileTopEmail).text = sharedPref.getString("emp_email", "11")
+            mmId = sharedPref.getString("emp_id_no", "11").toString()
+//        findViewById<TextView>(R.id.tvProfileMobileNo).text = sharedPref.getString("emp_mobile_no", "11")
+//            mmId = sharedPref.getString("emp_org", "11").toString()
+        Log.e(mmId, "HttpException, unexpected response")
+//        findViewById<TextView>(R.id.tvProfileRegId).text = sharedPref.getString("emp_reg_id", "11")
+//        findViewById<TextView>(R.id.tvProfileRegDate).text = sharedPref.getString("emp_reg_date", "11")
+//
+//        val empIdCardUri = sharedPref.getString("emp_id_card_uri", "")
+//        try { // loading ID Card
+//            Picasso.get().load(empIdCardUri).into(findViewById<ImageView>(R.id.profile_id_card_iv))
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
+
+    }
+
     private fun spinnerValidator() {
         val languages = resources.getStringArray(R.array.Languages)
 
@@ -177,11 +254,11 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
                     if(languages[position] == "Show all"){
                                 sifaaFloralAdapter.filterList(allItems) //display complete list
                                 sifaaRecAdapter.filterList(allItems2) //display complete list
-                                sifaaRecAdapter.filterList(allItems3) //display complete list
+                                sifaaFavAdapter.filterList(allItems3) //display complete list
                                 val container: LinearLayout = findViewById(R.id.flower_categories_container_ll)
                                 for (ll in container.children) {
                                     ll.alpha =
-                                        1.0f //change alpha value of all the category items, so it will indicate that they are not pressed
+                                        1.0f
                                 }
                     }
 
@@ -189,10 +266,13 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
                     if(languages[position] == "Sort by price"){
                         //sifaaFloralAdapter.filterList(allItems) //display complete list
                         //  sifaaRecAdapter.filterList(allItems2) //display complete list
+
+                        //val languages = resources.getStringArray(R.array.Languages)
+
                         val container: LinearLayout = findViewById(R.id.flower_categories_container_ll)
                         for (ll in container.children) {
                             ll.alpha =
-                                1.0f //change alpha value of all the category items, so it will indicate that they are not pressed
+                                1.0f
                         }
                         val filterList = ArrayList<SifaaFloralItem>()
                         for (item in allItems) {
@@ -208,7 +288,7 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
                         val container: LinearLayout = findViewById(R.id.flower_categories_container_ll)
                         for (ll in container.children) {
                             ll.alpha =
-                                1.0f //change alpha value of all the category items, so it will indicate that they are not pressed
+                                1.0f
                         }
                         val filterList = ArrayList<SifaaFloralItem>()
                         for (item in allItems) {
@@ -231,6 +311,7 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
     private fun loadProfile() {
         val user = auth.currentUser!!
         this.empName = user.displayName!!
+        //val languages = resources.getStringArray(R.array.Languages)
         this.empEmail = user.email!!
         findViewById<TextView>(R.id.top_wish_name_tv).text = "Hi ${this.empName.split(" ")[0]}"
         Handler().postDelayed({
@@ -286,7 +367,7 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
 
 
         itemRecyclerView2.adapter = sifaaRecAdapter
-        itemRecyclerView2.layoutManager = LinearLayoutManager(this@MainActivity,LinearLayoutManager.HORIZONTAL, false)
+        itemRecyclerView2.layoutManager = LinearLayoutManager(this@MainActivity)
 
 
 
@@ -295,7 +376,7 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
             1 -> { // Offline
                 val data = db.readOfflineMenuData()
 
-                if (data.size == 0) { //means, offline database is not available
+                if (data.size == 0) {
                     AlertDialog.Builder(this)
                         .setMessage("Offline Menu is now not available. Do you want download the menu for Offline?")
                         .setPositiveButton(
@@ -360,7 +441,7 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
         showAllLL = findViewById(R.id.main_activity_show_all_ll)
 
         findViewById<ImageView>(R.id.main_activity_search_iv).setOnClickListener {
-            //hiding all the views which are above the items
+            //val languages = resources.getStringArray(R.array.Languages)
             topHeaderLL.visibility = ViewGroup.GONE
             showAllLL.visibility = ViewGroup.GONE
             topSearchLL.visibility = ViewGroup.VISIBLE
@@ -445,6 +526,17 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
                         )
                     }, drawerDelay)
                 }
+                R.id.sifaabot -> {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    Handler().postDelayed({
+                        startActivity(
+                            Intent(
+                                this,
+                                SifaaKnowledgeBot::class.java
+                            )
+                        )
+                    }, drawerDelay)
+                }
                 R.id.nav_orders_history -> {
                     drawerLayout.closeDrawer(GravityCompat.START)
                     Handler().postDelayed({
@@ -459,9 +551,7 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
                 R.id.nav_share_app -> {
                     shareApp()
                 }
-                R.id.nav_report_bug -> {
-                    Toast.makeText(this, "Not Available", Toast.LENGTH_SHORT).show()
-                }
+
                 R.id.nav_contact_us -> {
                     drawerLayout.closeDrawer(GravityCompat.START)
                     Handler().postDelayed({
@@ -537,6 +627,18 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
                         )
                     }, drawerDelay)
                 }
+
+                R.id.nav_purchased_history -> {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    Handler().postDelayed({
+                        startActivity(
+                            Intent(
+                                this,
+                                SifaaPrevious::class.java
+                            )
+                        )
+                    }, drawerDelay)
+                }
             }
             true
         }
@@ -551,12 +653,11 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
     }
 
     private fun logOutUser() {
-        // Remove all the settings
-        // Remove all the order history, my orders (warn him/her to Backup the data)
+
 
         android.app.AlertDialog.Builder(this)
             .setTitle("Attention")
-            .setMessage("Are you sure you want to Log Out ? You will lose all your Orders, as it is a demo App")
+            .setMessage("Are you sure you want to Log Out ? You will lose all your SIFAA Orders, as it is a beta App")
             .setPositiveButton("Yes", DialogInterface.OnClickListener { _, _ ->
                 Firebase.auth.signOut()
 
@@ -589,8 +690,8 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
         startActivity(Intent.createChooser(intent, "Share To"))
     }
 
-    fun showBottomDialog(view: View) {
-        val bottomDialog = BottomSheetSelectedItemDialog()
+    fun showSifaaBottomCartDialog(view: View) {
+        val bottomDialog = SifaaDialogBottomSheetItem()
         val bundle = Bundle()
 
         var totalPrice = 0.0f
@@ -608,17 +709,19 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
         bottomDialog.arguments = bundle
         bottomDialog.show(supportFragmentManager, "BottomSheetDialog")
     }
-    fun btnTakeSurvey(){
-        btnSurvey.setOnClickListener {
-            intent = Intent(applicationContext, SurveyActivity::class.java)
-            startActivity(intent)
-        }
+    fun btnTakeSurvey(i: Int) {
+//
+
+
     }
 
     private fun navigateToDetectorActivity() {
-        val diseaseFragment = DetectorFragment()
-        supportFragmentManager.beginTransaction().add(R.id.diseaseDetectorLayout, diseaseFragment)
-            .commit()
+//        val diseaseFragment = DetectorFragment()
+//        supportFragmentManager.beginTransaction().add(R.id.diseaseDetectorLayout, diseaseFragment)
+//            .commit()
+        val intent = Intent(this, DiseaseMainActivity::class.java)
+
+        startActivity(intent)
     }
 
     private fun openUserProfileActivity() {
@@ -680,115 +783,364 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
 //            sifaaFloralAdapter.notifyItemRangeInserted(0, allItems.size)
 //        }
 
-            lifecycleScope.launchWhenCreated {
-                progressBar.isVisible = true
+        lifecycleScope.launchWhenCreated {
+            progressBar.isVisible = true
 
-              //  progressBar2.isVisible = true
-                val response = try {
-                    RetrofitInstance.api.getRec()
+            //  progressBar2.isVisible = true
+            val response = try {
+                RetrofitInstance.api.getRec(mmId)
 
-                } catch(e: IOException) {
-                    Log.e(TAG, "IOException, you might not have internet connection")
-                    progressBar.isVisible = false
-               //     progressBar2.isVisible = false
-                    return@launchWhenCreated
-                } catch (e: HttpException) {
-                    Log.e(TAG, "HttpException, unexpected response")
-                    progressBar.isVisible = false
-               //     progressBar2.isVisible = false
-                    return@launchWhenCreated }
-                if(response.isSuccessful && response.body() != null) {
-                    progressBar.isVisible = false
-               //     progressBar2.isVisible = false
-                    tvRecMin.isVisible = true
-                    if (requestType == RequestType.READ) {
-                        for (item in list) {
-                            allItems.add(item)
-                            for(i in response.body()!!.indices){
-                                zAxes.add(response.body()!![i].id)
-                            if(item.itemID == zAxes[i].toString()){
-                                allItems2.add(item)
-
-                            }
+            } catch (e: IOException) {
+                Log.e(TAG, "IOException, you might not have internet connection")
+                progressBar.isVisible = false
+                //     progressBar2.isVisible = false
+                return@launchWhenCreated
+            } catch (e: HttpException) {
+                Log.e(TAG, "HttpException, unexpected response")
+                progressBar.isVisible = false
+                //     progressBar2.isVisible = false
+                return@launchWhenCreated
+            }
+            if (response.isSuccessful && response.body() != null) {
+                progressBar.isVisible = false
+                //     progressBar2.isVisible = false
+                tvRecMin.isVisible = true
+                if (requestType == RequestType.READ) {
+                    for (item in list) {
+                        for (i in response.body()!!.indices) {
+                            zAxes.add(response.body()!![i].id)
+                            if (item.itemID == zAxes[i].toString()) {
+                                    allItems2.add(item)
+                                // Log.e(response.body()!![0].name, "HttpException, unexpected response")
                             }
                         }
-                        if (allItems2.isEmpty()){
-                            btnSurvey.isVisible = true
-                            btnTakeSurvey()
-                        }
-
-                        sifaaFloralAdapter.notifyItemRangeInserted(0, allItems.size)
                         sifaaRecAdapter.notifyItemRangeInserted(0, allItems2.size)
+                    }
+                }
+                    if(allItems2.isEmpty()){
+                        items_recycler_view2.isVisible = false
 
+                        rb01.isVisible = true
+                        rb02.isVisible = true
+                        rb03.isVisible = true
+                        rb04.isVisible = true
+                        rb05.isVisible = true
+                        rb06.isVisible = true
+                        rb07.isVisible = true
+                        rb08.isVisible = true
+
+
+                        rb01.setOnCheckedChangeListener { _, isChecked ->
+
+                            lifecycleScope.launchWhenCreated {
+
+
+                                //  progressBar2.isVisible = true
+                                val response = try {
+                                    RetrofitInstance.api.getRec(mmId)
+
+                                } catch (e: IOException) {
+                                    Log.e(TAG, "IOException, you might not have internet connection")
+
+                                    //     progressBar2.isVisible = false
+                                    return@launchWhenCreated
+                                } catch (e: HttpException) {
+                                    Log.e(TAG, "HttpException, unexpected response")
+
+                                    //     progressBar2.isVisible = false
+                                    return@launchWhenCreated
+                                }
+                                if (response.isSuccessful && response.body() != null) {
+                                    items_recycler_view3.isVisible = true
+                                    if (requestType == RequestType.READ) {
+                                        for (item in list) {
+                                            for (i in response.body()!!.indices) {
+                                                xAxes.add(response.body()!![i].id)
+                                                if (item.itemID == xAxes[i].toString()) {
+                                                        allItems3.add(item)
+                                                    // Log.e(response.body()!![0].name, "HttpException, unexpected response")
+                                                }
+                                            }
+                                            sifaaFavAdapter.notifyItemRangeInserted(0, allItems3.size)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        rb02.setOnCheckedChangeListener { _, isChecked ->
+
+                            lifecycleScope.launchWhenCreated {
+
+
+                                //  progressBar2.isVisible = true
+                                val response = try {
+                                    RetrofitInstance.api.getRec(mmId)
+
+                                } catch (e: IOException) {
+                                    Log.e(TAG, "IOException, you might not have internet connection")
+
+                                    //     progressBar2.isVisible = false
+                                    return@launchWhenCreated
+                                } catch (e: HttpException) {
+                                    Log.e(TAG, "HttpException, unexpected response")
+
+                                    //     progressBar2.isVisible = false
+                                    return@launchWhenCreated
+                                }
+                                if (response.isSuccessful && response.body() != null) {
+                                    items_recycler_view3.isVisible = true
+                                    if (requestType == RequestType.READ) {
+                                        for (item in list) {
+                                            for (i in response.body()!!.indices) {
+                                                aAxes.add(response.body()!![i].id)
+                                                if (item.itemID == aAxes[i].toString()) {
+                                                    allItems3.add(item)
+                                                    // Log.e(response.body()!![0].name, "HttpException, unexpected response")
+                                                }
+                                            }
+                                            sifaaFavAdapter.notifyItemRangeInserted(xAxes.size, allItems3.size)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        rb03.setOnCheckedChangeListener { _, isChecked ->
+
+                            lifecycleScope.launchWhenCreated {
+
+
+                                //  progressBar2.isVisible = true
+                                val response = try {
+                                    RetrofitInstance.api.getRec(mmId)
+
+                                } catch (e: IOException) {
+                                    Log.e(TAG, "IOException, you might not have internet connection")
+
+                                    //     progressBar2.isVisible = false
+                                    return@launchWhenCreated
+                                } catch (e: HttpException) {
+                                    Log.e(TAG, "HttpException, unexpected response")
+
+                                    //     progressBar2.isVisible = false
+                                    return@launchWhenCreated
+                                }
+                                if (response.isSuccessful && response.body() != null) {
+                                    items_recycler_view3.isVisible = true
+                                    if (requestType == RequestType.READ) {
+                                        for (item in list) {
+                                            for (i in response.body()!!.indices) {
+                                                bAxes.add(response.body()!![i].id)
+                                                if (item.itemID == bAxes[i].toString()) {
+                                                    allItems3.add(item)
+                                                    // Log.e(response.body()!![0].name, "HttpException, unexpected response")
+                                                }
+                                            }
+                                            sifaaFavAdapter.notifyItemRangeInserted(aAxes.size, allItems3.size)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        rb04.setOnCheckedChangeListener { _, isChecked ->
+
+                            lifecycleScope.launchWhenCreated {
+
+
+                                //  progressBar2.isVisible = true
+                                val response = try {
+                                    RetrofitInstance.api.getRec(mmId)
+
+                                } catch (e: IOException) {
+                                    Log.e(TAG, "IOException, you might not have internet connection")
+
+                                    //     progressBar2.isVisible = false
+                                    return@launchWhenCreated
+                                } catch (e: HttpException) {
+                                    Log.e(TAG, "HttpException, unexpected response")
+
+                                    //     progressBar2.isVisible = false
+                                    return@launchWhenCreated
+                                }
+                                if (response.isSuccessful && response.body() != null) {
+                                    items_recycler_view3.isVisible = true
+                                    if (requestType == RequestType.READ) {
+                                        for (item in list) {
+                                            for (i in response.body()!!.indices) {
+                                                cAxes.add(response.body()!![i].id)
+                                                if (item.itemID == cAxes[i].toString()) {
+                                                    allItems3.add(item)
+                                                    // Log.e(response.body()!![0].name, "HttpException, unexpected response")
+                                                }
+                                            }
+                                            sifaaFavAdapter.notifyItemRangeInserted(bAxes.size, allItems3.size)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+
+                        rb05.setOnCheckedChangeListener { _, isChecked ->
+
+                            lifecycleScope.launchWhenCreated {
+
+
+                                //  progressBar2.isVisible = true
+                                val response = try {
+                                    RetrofitInstance.api.getRec(mmId)
+
+                                } catch (e: IOException) {
+                                    Log.e(TAG, "IOException, you might not have internet connection")
+
+                                    //     progressBar2.isVisible = false
+                                    return@launchWhenCreated
+                                } catch (e: HttpException) {
+                                    Log.e(TAG, "HttpException, unexpected response")
+
+                                    //     progressBar2.isVisible = false
+                                    return@launchWhenCreated
+                                }
+                                if (response.isSuccessful && response.body() != null) {
+                                    items_recycler_view3.isVisible = true
+                                    if (requestType == RequestType.READ) {
+                                        for (item in list) {
+                                            for (i in response.body()!!.indices) {
+                                                dAxes.add(response.body()!![i].id)
+                                                if (item.itemID == dAxes[i].toString()) {
+                                                    allItems3.add(item)
+                                                    // Log.e(response.body()!![0].name, "HttpException, unexpected response")
+                                                }
+                                            }
+                                            sifaaFavAdapter.notifyItemRangeInserted(cAxes.size, allItems3.size)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+
+                        rb06.setOnCheckedChangeListener { _, isChecked ->
+
+                            lifecycleScope.launchWhenCreated {
+
+
+                                //  progressBar2.isVisible = true
+                                val response = try {
+                                    RetrofitInstance.api.getRec(mmId)
+
+                                } catch (e: IOException) {
+                                    Log.e(TAG, "IOException, you might not have internet connection")
+
+                                    //     progressBar2.isVisible = false
+                                    return@launchWhenCreated
+                                } catch (e: HttpException) {
+                                    Log.e(TAG, "HttpException, unexpected response")
+
+                                    //     progressBar2.isVisible = false
+                                    return@launchWhenCreated
+                                }
+                                if (response.isSuccessful && response.body() != null) {
+                                    items_recycler_view3.isVisible = true
+                                    if (requestType == RequestType.READ) {
+                                        for (item in list) {
+                                            for (i in response.body()!!.indices) {
+                                                eAxes.add(response.body()!![i].id)
+                                                if (item.itemID == eAxes[i].toString()) {
+                                                    allItems3.add(item)
+                                                    // Log.e(response.body()!![0].name, "HttpException, unexpected response")
+                                                }
+                                            }
+                                            sifaaFavAdapter.notifyItemRangeInserted(dAxes.size, allItems3.size)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+
+                        rb07.setOnCheckedChangeListener { _, isChecked ->
+
+                            lifecycleScope.launchWhenCreated {
+
+
+                                //  progressBar2.isVisible = true
+                                val response = try {
+                                    RetrofitInstance.api.getRec(mmId)
+
+                                } catch (e: IOException) {
+                                    Log.e(TAG, "IOException, you might not have internet connection")
+
+                                    //     progressBar2.isVisible = false
+                                    return@launchWhenCreated
+                                } catch (e: HttpException) {
+                                    Log.e(TAG, "HttpException, unexpected response")
+
+                                    //     progressBar2.isVisible = false
+                                    return@launchWhenCreated
+                                }
+                                if (response.isSuccessful && response.body() != null) {
+                                    items_recycler_view3.isVisible = true
+                                    if (requestType == RequestType.READ) {
+                                        for (item in list) {
+                                            for (i in response.body()!!.indices) {
+                                                fAxes.add(response.body()!![i].id)
+                                                if (item.itemID == fAxes[i].toString()) {
+                                                    allItems3.add(item)
+                                                    // Log.e(response.body()!![0].name, "HttpException, unexpected response")
+                                                }
+                                            }
+                                            sifaaFavAdapter.notifyItemRangeInserted(eAxes.size, allItems3.size)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+
+                        rb08.setOnCheckedChangeListener { _, isChecked ->
+
+                            lifecycleScope.launchWhenCreated {
+
+
+                                //  progressBar2.isVisible = true
+                                val response = try {
+                                    RetrofitInstance.api.getRec(mmId)
+
+                                } catch (e: IOException) {
+                                    Log.e(TAG, "IOException, you might not have internet connection")
+
+                                    //     progressBar2.isVisible = false
+                                    return@launchWhenCreated
+                                } catch (e: HttpException) {
+                                    Log.e(TAG, "HttpException, unexpected response")
+
+                                    //     progressBar2.isVisible = false
+                                    return@launchWhenCreated
+                                }
+                                if (response.isSuccessful && response.body() != null) {
+                                    items_recycler_view3.isVisible = true
+                                    if (requestType == RequestType.READ) {
+                                        for (item in list) {
+                                            for (i in response.body()!!.indices) {
+                                                gAxes.add(response.body()!![i].id)
+                                                if (item.itemID == gAxes[i].toString()) {
+                                                    allItems3.add(item)
+                                                    // Log.e(response.body()!![0].name, "HttpException, unexpected response")
+                                                }
+                                            }
+                                            sifaaFavAdapter.notifyItemRangeInserted(fAxes.size, allItems3.size)
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
 
-                    //  todoAdapter.todos = response.body()!!
-                    //Log.e(response.body()!![0].name, "HttpException, unexpected response")
-                    //response.body()!![0].name = recItemValidatedName
-
-
-                    Log.e(zAxes[0].toString(), "expected response")
-
-                } else {
-                    Log.e("hi", "HttpException, unexpectedasdasdasd response")
-                    //   Log.e(TAG, "Response not successful")
-                }
-                // binding.progressBar.isVisible = false
-
-
             }
-//
-//        lifecycleScope.launchWhenCreated {
-//
-//
-//            //  progressBar2.isVisible = true
-//            val response = try {
-//                RetrofitInstance.api.getFav()
-//
-//            } catch(e: IOException) {
-//                Log.e(TAG, "IOException, you might not have internet connection")
-//
-//                //     progressBar2.isVisible = false
-//                return@launchWhenCreated
-//            } catch (e: HttpException) {
-//                Log.e(TAG, "HttpException, unexpected response")
-//
-//                //     progressBar2.isVisible = false
-//                return@launchWhenCreated }
-//            if(response.isSuccessful && response.body() != null) {
-//
-//                //     progressBar2.isVisible = false
-//
-//                if (requestType == RequestType.READ) {
-//                    for (item in list) {
-//                        for(i in response.body()!!.indices){
-//                            zPlusAxes.add(response.body()!![i].fav)
-//                            if(item.itemID == zPlusAxes[i].toString()){
-//                                allItems3.add(item)
-//                            }
-//                        }
-//                    }
-//
-//
-//                    sifaaFavAdapter.notifyItemRangeInserted(0, allItems3.size)
-//                }
-//
-//                //  todoAdapter.todos = response.body()!!
-//                //Log.e(response.body()!![0].name, "HttpException, unexpected response")
-//                //response.body()!![0].name = recItemValidatedName
-//
-//
-//                Log.e(zPlusAxes[0].toString(), "expected response")
-//
-//            } else {
-//                Log.e("hi", "HttpException, unexpectedasdasdasd response")
-//                //   Log.e(TAG, "Response not successful")
-//            }
-//            // binding.progressBar.isVisible = false
-//
-//
-//        }
-//
+        }
 
 
 
@@ -804,7 +1156,47 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
     }
 
     override fun onItemClick(itemSifaa: SifaaFloralItem) {
-        //Do some stuff, when we click on an item, like Show More details of that item
+
+
+        lifecycleScope.launchWhenCreated {
+         //   progressBar.isVisible = true
+
+            //  progressBar2.isVisible = true
+            val response = try {
+
+                RetrofitInstance.api.getwri("${empName}::${empName}")
+
+            } catch(e: IOException) {
+                Log.e(TAG, "IOException, you might not have internet connection")
+                progressBar.isVisible = false
+                //     progressBar2.isVisible = false
+                return@launchWhenCreated
+            } catch (e: HttpException) {
+                Log.e(TAG, "HttpException, unexpected response")
+                progressBar.isVisible = false
+                //     progressBar2.isVisible = false
+                return@launchWhenCreated }
+            if(response.isSuccessful && response.body() != null) {
+                progressBar.isVisible = false
+                //     progressBar2.isVisible = false
+             //   tvRecMin.isVisible = true
+
+                Toast.makeText(applicationContext, "Offline Menu Updated", Toast.LENGTH_LONG).show()
+                //  todoAdapter.todos = response.body()!!
+                //Log.e(response.body()!![0].name, "HttpException, unexpected response")
+                //response.body()!![0].name = recItemValidatedName
+
+
+                Log.e(zAxes[0].toString(), "expected response")
+
+            } else {
+                Log.e("hi", "HttpException, unexpectedasdasdasd response")
+                //   Log.e(TAG, "Response not successful")
+            }
+            // binding.progressBar.isVisible = false
+
+
+        }
     }
 
     override fun onPlusBtnClick(itemSifaa: SifaaFloralItem) {

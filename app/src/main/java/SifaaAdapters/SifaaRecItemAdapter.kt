@@ -35,7 +35,7 @@ class SifaaRecItemAdapter(
         val itemImageIV: ImageView = itemView.findViewById(R.id.item_image)
         val itemNameTV: TextView = itemView.findViewById(R.id.item_name)
         val itemPriceTV: TextView = itemView.findViewById(R.id.item_price)
-        val itemStarsTV: TextView = itemView.findViewById(R.id.item_stars)
+//        val itemStarsTV: TextView = itemView.findViewById(R.id.item_stars)
         val itemShortDesc: TextView = itemView.findViewById(R.id.item_short_desc)
         val itemQuantityTV: TextView = itemView.findViewById(R.id.item_quantity_tv)
         val itemQuantityIncreaseIV: ImageView =
@@ -46,7 +46,7 @@ class SifaaRecItemAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemListViewHolder {
         val itemView =
-            LayoutInflater.from(parent.context).inflate(R.layout.sifaa_list_shop_rec_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.sifaa_list_shop_item, parent, false)
 
         fullItemList = ArrayList<SifaaFloralItem>(itemListSifaa)
         return ItemListViewHolder(itemView)
@@ -59,13 +59,14 @@ class SifaaRecItemAdapter(
         else Picasso.get().load(currentItem.imageUrl).into(holder.itemImageIV)
 
         holder.itemNameTV.text = currentItem.itemName
-        holder.itemPriceTV.text = "$${currentItem.itemPrice}"
-        holder.itemStarsTV.text = currentItem.itemStars.toString()
+        holder.itemPriceTV.text = "Rs. ${currentItem.itemPrice}"
+      //  holder.itemStarsTV.text = currentItem.itemStars.toString()
         holder.itemShortDesc.text = currentItem.itemShortDesc
         holder.itemQuantityTV.text = currentItem.quantity.toString()
 
         holder.itemQuantityIncreaseIV.setOnClickListener {
             val n = currentItem.quantity
+            holder.itemQuantityIncreaseIV.setImageResource(R.drawable.ic_baseline_download_done_24)
             holder.itemQuantityTV.text = (n+1).toString()
 
             listener.onPlusBtnClick(currentItem)
