@@ -511,6 +511,10 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
                     drawerLayout.closeDrawer(GravityCompat.START)
                     Handler().postDelayed({ navigateToDetectorActivity() }, drawerDelay)
                 }
+                R.id.pathDraw -> {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    Handler().postDelayed({ navigateToLocationActivity() }, drawerDelay)
+                }
                 R.id.nav_profile -> {
                     drawerLayout.closeDrawer(GravityCompat.START)
                     Handler().postDelayed({ openUserProfileActivity() }, drawerDelay)
@@ -585,17 +589,6 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
                             Intent(
                                 this,
                                 MapsActivity::class.java
-                            )
-                        )
-                    }, drawerDelay)
-                }
-                R.id.pathDraw -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    Handler().postDelayed({
-                        startActivity(
-                            Intent(
-                                this,
-                                MainActivity2::class.java
                             )
                         )
                     }, drawerDelay)
@@ -713,6 +706,12 @@ class MainActivity : AppCompatActivity(), SifaaRecItemAdapter.OnItemClickListene
 //
 
 
+    }
+
+    private fun navigateToLocationActivity() {
+        val intent = Intent(this, MainActivity2::class.java)
+
+        startActivity(intent)
     }
 
     private fun navigateToDetectorActivity() {

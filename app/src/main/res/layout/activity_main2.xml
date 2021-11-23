@@ -9,9 +9,21 @@
     <TextView
         android:id="@+id/path"
         android:layout_width="0dp"
-        android:textSize="20sp"
         android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/mapIv"
+        android:layout_width="231dp"
+        android:layout_height="177dp"
+        android:layout_marginTop="128dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/default_sifaa_image" />
 </androidx.constraintlayout.widget.ConstraintLayout>

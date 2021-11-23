@@ -9,7 +9,7 @@ object RetrofitInstance {
     val api: TodoApi by lazy {
 
         Retrofit.Builder()
-            .baseUrl("http://192.168.1.5:8001")
+            .baseUrl("http://geo-spatial-data-analysis.herokuapp.com")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(TodoApi::class.java)

@@ -21,10 +21,10 @@
             android:icon="@drawable/crop_image_menu_flip"
             android:title="Ask From Bot" />
         <item
-            android:id="@+id/clusterAnalysis"
+            android:id="@+id/pathDraw"
             android:checked="false"
             android:icon="@android:drawable/ic_menu_mapmode"
-            android:title="Ask From Bot" />
+            android:title="Location list" />
     </group>
 
     <group

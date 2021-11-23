@@ -11,4 +11,5 @@ object Constants {
     const val GALLERY_IMAGE_ACTIVITY_REQUEST_CODE: Int = 1000
 
     const val BASE_URL = "https://flower-disease-cnn.herokuapp.com/"
+    const val LOCATION_BASE_URL = "https://geo-spatial-data-analysis.herokuapp.com/"
 }

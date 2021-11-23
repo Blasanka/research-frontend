@@ -1,24 +1,16 @@
 package com.example.floral.knowledgebase
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.example.floral.databinding.ActivityGetHelpDiseaseBinding
-import com.example.floral.databinding.ActivityPredictionResultBinding
 import com.example.floral.disease.Constants
-import com.example.floral.disease.DiseasesService
-import com.example.floral.disease.PredictionResultActivity
 import com.example.floral.disease.ResultResponse
 import com.example.floral.knowledgebase.data.DiseaseDetails
-import com.example.floral.knowledgebase.data.Guidance
+import com.example.floral.knowledgebase.data.ClusterMap
 import com.google.gson.GsonBuilder
 import com.kaopiz.kprogresshud.KProgressHUD
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -59,8 +51,8 @@ class GetHelpDiseaseActivity : AppCompatActivity() {
         val body = result.identifiedDisease?.let { result.flowerName?.let { it1 -> DiseaseDetails(diseaseName= it, flowerName = it1) } }
         // Fetch the national data
         if (body != null) {
-            knowledgeableService.getHelpForDisease(body).enqueue(object : Callback<Guidance> {
-                override fun onResponse(call: Call<Guidance>, response: Response<Guidance>) {
+            knowledgeableService.getHelpForDisease(body).enqueue(object : Callback<ClusterMap> {
+                override fun onResponse(call: Call<ClusterMap>, response: Response<ClusterMap>) {
                     Log.i(Constants.TAG, "onResponse: $response")
                     val data = response.body()
                     if (data == null) {
@@ -73,7 +65,7 @@ class GetHelpDiseaseActivity : AppCompatActivity() {
                     binding.guidanceTv.text = data.toString()
                 }
 
-                override fun onFailure(call: Call<Guidance>, t: Throwable) {
+                override fun onFailure(call: Call<ClusterMap>, t: Throwable) {
                     Log.e(Constants.TAG, "onFailure: $t")
                     hud?.dismiss();
                 }
