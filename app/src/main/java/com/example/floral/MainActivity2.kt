@@ -1,14 +1,20 @@
 package com.example.floral
 
+import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.lifecycle.lifecycleScope
 import com.example.floral.disease.Constants
 import com.example.floral.disease.ResultResponse
+import com.example.floral.knowledgebase.GetHelpDiseaseActivity
 import com.example.floral.knowledgebase.KnowledgeableService
 import com.example.floral.knowledgebase.data.ClusterMap
 import com.example.floral.knowledgebase.data.DiseaseDetails
@@ -24,12 +30,23 @@ import java.io.IOException
 
 class MainActivity2 : AppCompatActivity() {
 
-    private var mapIv: ImageView? = null
+    private lateinit var latEt: EditText
+    private lateinit var longEt: EditText
+    private lateinit var checkBt: Button
+
+    private lateinit var mapIv: WebView
     private var hud: KProgressHUD? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
+
+        latEt = findViewById(R.id.latEt)
+        longEt = findViewById(R.id.longEt)
+        checkBt = findViewById(R.id.checkId)
+
+        val latitude = latEt.text.toString().toDoubleOrNull()
+        val longitude = longEt.text.toString().toDoubleOrNull()
 
         mapIv = findViewById(R.id.mapIv)
 
@@ -47,26 +64,13 @@ class MainActivity2 : AppCompatActivity() {
             .build()
 
         val locationService = retrofit.create(LocationService::class.java)
-        locationService.getClusterMap().enqueue(object : Callback<ClusterMap> {
-            override fun onResponse(call: Call<ClusterMap>, response: Response<ClusterMap>) {
-                Log.i(Constants.TAG, "onResponse: $response")
-                val data = response.body()
-                if (data == null) {
-                    Log.w(Constants.TAG, "Did not received a valid response body")
-                    return
-                }
-                Log.i(Constants.TAG, "Update result view with guidance data")
-                Log.i(Constants.TAG, data.toString())
-                hud?.dismiss()
-                mapIv?.setImageURI(Uri.parse(data.result))
-            }
+        requstMapAndPlotResult(locationService, latitude, longitude)
 
-            override fun onFailure(call: Call<ClusterMap>, t: Throwable) {
-                Log.e(Constants.TAG, "onFailure: $t")
-                hud?.dismiss();
-            }
-        })
 
+        checkBt.setOnClickListener {
+            hud!!.show()
+            requstMapAndPlotResult(locationService, latitude, longitude)
+        }
 //    lifecycleScope.launchWhenCreated {
 //        val response = try{
 //            RetrofitInstance.api.getCluster()
@@ -90,6 +94,47 @@ class MainActivity2 : AppCompatActivity() {
 //
 //    }
 
+    }
+
+    private fun requstMapAndPlotResult(
+        locationService: LocationService,
+        latitude: Double?,
+        longitude: Double?
+    ) {
+        locationService.getClusterMap(latitude ?: 6.5, longitude ?: 79.86)
+            .enqueue(object : Callback<ClusterMap> {
+                override fun onResponse(call: Call<ClusterMap>, response: Response<ClusterMap>) {
+                    Log.i(Constants.TAG, "onResponse: $response")
+                    val data = response.body()
+                    if (data == null) {
+                        Log.w(Constants.TAG, "Did not received a valid response body")
+                        return
+                    }
+                    Log.i(Constants.TAG, "Update result view with guidance data")
+                    Log.i(Constants.TAG, data.toString())
+                    hud?.dismiss()
+    //                mapIv?.setImageURI(Uri.parse(data.result))
+
+                    mapIv.settings.setJavaScriptEnabled(true)
+
+                    mapIv.webViewClient = object : WebViewClient() {
+                        override fun shouldOverrideUrlLoading(
+                            view: WebView?,
+                            url: String?
+                        ): Boolean {
+                            view?.loadUrl(url)
+                            return true
+                        }
+                    }
+                    hud?.dismiss()
+                    mapIv.loadUrl(data.results)
+                }
+
+                override fun onFailure(call: Call<ClusterMap>, t: Throwable) {
+                    Log.e(Constants.TAG, "onFailure: $t")
+                    hud?.dismiss();
+                }
+            })
     }
 
     fun goBack(view: View) {
