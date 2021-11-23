@@ -10,6 +10,7 @@ object Constants {
     const val CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE: Int = 1888
     const val GALLERY_IMAGE_ACTIVITY_REQUEST_CODE: Int = 1000
     const val bi = 92.0
+    const val max = 100.0
     const val start = 0.0
     const val end = 1.0
 

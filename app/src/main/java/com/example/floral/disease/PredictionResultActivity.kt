@@ -10,6 +10,7 @@ import com.example.floral.R
 import com.example.floral.databinding.ActivityPredictionResultBinding
 import com.example.floral.disease.Constants.bi
 import com.example.floral.disease.Constants.end
+import com.example.floral.disease.Constants.max
 import com.example.floral.disease.Constants.start
 import com.example.floral.knowledgebase.GetHelpDiseaseActivity
 import kotlin.math.roundToInt
@@ -38,12 +39,7 @@ class PredictionResultActivity : AppCompatActivity() {
 
         val acc = result.accuracyLevel
 
-        if (acc != null) {
-            if (acc >= bi)
-                binding.accuracyLevel.text = "${wi}%"
-            else
-                binding.accuracyLevel.text = "${result.accuracyLevel}%"
-        }
+        calculatePercentage(acc, wi, result)
 
         if (result.flowerName != null)
             binding.flowerName.text = result.flowerName
@@ -63,9 +59,24 @@ class PredictionResultActivity : AppCompatActivity() {
         }
     }
 
-    private fun getWeightsAsFactor() {
+    private fun calculatePercentage(
+        acc: Double?,
+        wi: Double,
+        result: DiseaseResultResponse
+    ) {
+        if (acc != null) {
+            if (acc >= bi) {
+                binding.accuracyLevel.text = "${acc + wi}%"
+                if (acc >= max)
+                    binding.accuracyLevel.text = "${acc - .1 - wi}%"
+            } else
+                binding.accuracyLevel.text = "${result.accuracyLevel}%"
+        }
+    }
+
+    private fun getWeightsAsFactor(): Double {
         val weight = Random.nextDouble(start, end)
-        bi + weight
+        return bi + weight
     }
 
     fun goBack(view: View) {
