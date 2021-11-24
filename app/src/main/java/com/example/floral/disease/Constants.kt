@@ -15,4 +15,5 @@ object Constants {
     const val end = 1.0
 
     const val BASE_URL = "https://flower-disease-cnn.herokuapp.com/"
+    const val LOCATION_BASE_URL = "https://geo-spatial-data-analysis.herokuapp.com/"
 }

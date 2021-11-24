@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.ActionBar
 import com.example.floral.R
+import com.example.floral.SifaaKnowledgeBot
 import com.example.floral.databinding.ActivityPredictionResultBinding
 import com.example.floral.disease.Constants.bi
 import com.example.floral.disease.Constants.end
@@ -49,7 +50,7 @@ class PredictionResultActivity : AppCompatActivity() {
             binding.diseaseDescription.text = result.diseaseDescription
 
         binding.getHelpButton.setOnClickListener {
-            val intent = Intent(applicationContext, GetHelpDiseaseActivity::class.java)
+            val intent = Intent(applicationContext, SifaaKnowledgeBot::class.java)
             intent.putExtra("result", result)
             startActivity(intent)
         }
